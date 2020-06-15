@@ -1,0 +1,52 @@
+<apex:page showHeader="false" sidebar="true" docType="html-5.0" controller="LoginHRCC">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+	<head>		
+		<title>Login</title>
+		<apex:slds />
+	</head>
+
+	<div class="slds-grid slds-grid_align-center">
+		<apex:panelGrid bgcolor="white" columns="1">
+	        <apex:panelGrid width="758" cellpadding="0" cellspacing="0" bgcolor="white" columns="1" styleClass="topPanelContainer">
+		    	<apex:pageMessages />
+		    	<apex:image url="{!URLFOR($Resource.SiteSamples, 'img/clock.png')}"/>
+			</apex:panelGrid>
+		</apex:panelGrid>
+	</div>
+	<div class="slds-grid slds-grid_align-center">
+	    <apex:form >
+	        			<!-- outputPanel -->		
+	        				<apex:panelGroup >
+	        				<div class="slds-form-element" >
+		        				<apex:outputPanel rendered="{!getInput}">
+				                <label class="slds-form-element__label " for="Username">Username</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputText value="{!username}" />
+				            	</div>
+				                <label class="slds-form-element__label " for="Password">Password</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputSecret value="{!password}" />  
+				                </div>         
+				                <apex:commandButton action="{!getLoginAccount}"
+				                    value="{!$Label.site.login_button}" />
+				            	</apex:outputPanel>
+				            	<br />
+						        <apex:outputPanel rendered="{!!getInput}">
+				               	<label class="slds-form-element__label " for="Username">Username</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputText value="{!username}" />
+				            	</div>
+				                <label class="slds-form-element__label " for="Password">Password</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputSecret value="{!password}" />  
+				                </div>         
+				                <apex:commandButton action="{!getLoginAccount}"
+				                    value="{!$Label.site.login_button}" />
+						        </apex:outputPanel>
+						   	</div>
+			            	</apex:panelGroup>
+		        		<!-- End outputPanel -->
+	    </apex:form>
+	</div>
+	</html>
+</apex:page>

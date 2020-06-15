@@ -1,0 +1,180 @@
+<apex:page showHeader="false" applyHtmlTag="false" docType="html-5.0" standardController="ProfileCV__c" extensions="myControllerExtension">
+<head>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"/>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+   <script>  
+      var App = angular.module('myApp', []);
+      App.controller('body', function ($scope) {   
+         $scope.address = '{!ProfileCV__c.address__c}';
+         $scope.phone = '{!ProfileCV__c.phone__c}';
+         $scope.email = '{!ProfileCV__c.email__c}';
+         $scope.website = '{!ProfileCV__c.website__c}';
+     })
+      .controller('experience',function($scope){
+          var experiencesJson = JSON.parse('{!experiences}');
+          $scope.e = experiencesJson;
+          $scope.name = '{!ProfileCV__c.name__c}';
+      })
+       .controller('educations',function($scope){
+        var educationsjson = JSON.parse('{!educations}');
+        $scope.educations = educationsjson;
+      })
+       .controller('skills',function($scope){
+        var skillsjson = JSON.parse('{!skills}');
+        $scope.skills = skillsjson;
+      })
+       .controller('projectUndertaken',function($scope){
+        var projectUndertakensJson = JSON.parse('{!projectUndertakens}');
+        $scope.projectUndertakens = projectUndertakensJson;
+      })
+       .controller('hobbies' ,function($scope){
+        var hobbiesJson = JSON.parse('{!hobbies}');
+        $scope.hobbies = hobbiesJson;
+       })
+       .controller('objectives',function($scope){
+        var objectivesJson = JSON.parse('{!objectives}');
+        $scope.objectives = objectivesJson;
+       })
+ 
+   </script>
+<style type="text/css">
+   .wrapper-custom{
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+      padding: 50px;
+    }
+    .wrapper-left{
+      display: flex;
+        flex-direction: column;
+        color: white;
+        height: 100vw;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .wrapper-left .wrapper-content-image img{
+      padding: 3vw 0;
+      width: 35vw;
+    }
+    .wrapper-right{
+      display: flex;
+      flex-direction: column;
+      padding: 4vh;
+    }
+    .wrapper-right h1{
+      font-size: 4vw;
+      font-weight: 700;
+    }
+    .wrapper-right h2{
+      color: #943994;
+      font-size: 3vw;
+      font-weight: 400;
+    }
+    .wrapper-left .wrapper-content{
+      padding: 2vh 8vh;
+      text-align: -webkit-left;
+      font-size: 2vw;
+    }
+    .wrapper-left .wrapper-content img{
+      width: 7vh;
+    }
+    .wrapper-content-image{
+      text-align: center;
+    }
+    .wrapper-objective{
+      padding: 0 8vh;
+      font-size: 2vw;
+    }
+    .wrapper-right p{
+      font-size: 1.3vw;
+    }
+    .wrapper-objective p{
+      padding :0;
+      margin :0;
+    }
+    .wrapper-content a {
+      color: white;
+    }
+}
+  </style>
+</head>
+<body ng-app="myApp"  >
+    <div class="wrapper-custom">
+    <div class="wrapper-left" style="background-image: url('https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/40368408_128443304764513_1041293973143945216_n.jpg?_nc_cat=0&oh=74327832d9535cc480dec3879901b244&oe=5BFEB6E6')" ng-controller="body">
+      <div class="wrapper-content-image">
+        <img src="https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/40253109_128443378097839_691934740512505856_n.jpg?_nc_cat=0&oh=dab4781c089038f6df8314c6f0406c87&oe=5C341322"/>
+      </div>
+      <div class="wrapper-content">
+        <i class="fas fa-map-marker-alt"/>
+       {{address}}
+      </div>  
+      <div class="wrapper-content">
+        <i class="fas fa-mobile-alt"/>
+        {{phone}} 
+      </div>
+      <div class="wrapper-content">
+        <i class="fas fa-envelope-square"/>
+        {{email}}
+      </div>
+      <div class="wrapper-content">
+        <i class="fas fa-comments"/>
+        <a href="{{website}}">{{website}}</a>
+      </div>
+      <div class="wrapper-objective" ng-controller='objectives'>
+        <h1>OBJECTIVE</h1>
+        <p ng-repeat='objective in objectives| filter:query '>
+           {{objective.description__c}}
+        </p>
+      </div>
+    </div>
+    <div class="wrapper-right">
+      <div ng-controller='experience'>
+        
+      </div>
+      <div ng-controller='experience'>
+        <div>
+          <h1>{{name}}</h1>
+        </div>
+        <br/>
+        <div>
+          <h2>EXPERIENCE</h2>
+          <p ng-repeat='experience in e| filter:query'>
+            <i><strong>From {{experience.fromYear__c}}-{{experience.toYear__c}} :</strong></i> {{experience.description__c}}
+          </p>
+        </div>
+      </div>
+      <div ng-controller='educations'>
+        <h2>EDUCATION</h2>
+        <p ng-repeat='education in educations| filter:query '>
+          <i><strong>From {{education.fromYear__c}}-{{education.toYear__c}} :</strong></i>
+          {{education.title__c}} of {{education.place__c}} : {{education.department__c}}
+          <br/>
+          {{education.description__c}}
+        </p>
+      </div>
+      <div ng-controller='skills'>
+        <h2>SKILL</h2>
+        <p ng-repeat='skill in skills| filter:query '>
+          {{skill.description__c}}
+        </p>
+      </div>
+      <div ng-controller='projectUndertaken'>
+        <h2>PROJECT UNDERTAKEN</h2>
+        <div ng-repeat='projectUndertaken in projectUndertakens| filter:query '>
+          <p>-{{projectUndertaken.title__c}}: {{projectUndertaken.description__c}}</p>
+            LinkProject : <a href="{{projectUndertaken.linkProject1__c}}">{{projectUndertaken.linkProject1__c}}</a>
+            <br/>
+            LinkProject : <a href="{{projectUndertaken.linkProject2__c}}">{{projectUndertaken.linkProject1__c}}</a>
+            </div>
+      </div>
+      <div ng-controller='hobbies' >
+        <h2>HOBBY</h2>
+        <p ng-repeat='hobby in hobbies| filter:query '>
+          {{hobby.description__c}}
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</apex:page>

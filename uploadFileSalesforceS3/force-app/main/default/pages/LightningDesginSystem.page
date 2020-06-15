@@ -1,0 +1,191 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Salesforce Lightning Design System Trailhead Module</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+</head>
+<body>
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds-scope">
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+          </svg>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+          <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close" />
+          </svg>
+          <span class="slds-assistive-text">Close</span>
+        </button>
+        <h2 id="modal-heading-id-01" class="slds-text-heading_medium slds-hyphenate">Address: Nha Be </h2>
+      </header>
+      <div class="slds-modal__content" id="modal-content-id-01">
+        <div class="slds-grid">
+          <div class="slds-col">
+            <div class="slds-map">
+              <iframe id="GoogleMapID" title="Google Maps iframe" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d62738.07476319652!2d106.72623232333983!3d10.64703290621138!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1536217607435" style="border: 0px;"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+  <button class="slds-button slds-button_icon slds-button_icon-border-filled" aria-haspopup="true" title="Show More">
+    <svg class="slds-button__icon" aria-hidden="true">
+      <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+    </svg>
+    <span class="slds-assistive-text">Show More</span>
+  </button>
+  <div class="slds-dropdown slds-dropdown_left">
+    <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+      <li class="slds-dropdown__item" role="presentation">
+        <a href="javascript:void(0);" role="menuitem" tabindex="0">
+          <span class="slds-truncate" title="Menu Item One">Menu Item One</span>
+        </a>
+      </li>
+      <li class="slds-dropdown__item" role="presentation">
+        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+          <span class="slds-truncate" title="Menu Item Two">Menu Item Two</span>
+        </a>
+      </li>
+      <li class="slds-dropdown__item" role="presentation">
+        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+          <span class="slds-truncate" title="Menu Item Three">Menu Item Three</span>
+        </a>
+      </li>
+      <li class="slds-has-divider_top-space" role="separator"></li>
+      <li class="slds-dropdown__item" role="presentation">
+        <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+          <span class="slds-truncate" title="Menu Item Four">Menu Item Four</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+<ul class="slds-timeline">
+  <li>
+    <div class="slds-timeline__item_expandable slds-timeline__item_task">
+      <span class="slds-assistive-text">task</span>
+      <div class="slds-media">
+        <div class="slds-media__figure">
+          <button class="slds-button slds-button_icon" title="Toggle details for Review proposals for EBC deck with larger team and have marketing review this" aria-controls="task-item-base" aria-expanded="false">
+            <svg class="slds-button__icon slds-timeline__details-action-icon" aria-hidden="true">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#switch" />
+            </svg>
+            <span class="slds-assistive-text">Toggle details for Review proposals for EBC deck with larger team and have marketing review this</span>
+          </button>
+          <div class="slds-icon_container slds-icon-standard-task slds-timeline__icon" title="task">
+            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#task" />
+            </svg>
+          </div>
+        </div>
+        <div class="slds-media__body">
+          <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
+            <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
+              <span class="slds-checkbox">
+                <input type="checkbox" name="options" id="checkbox-4" value="checkbox-4" />
+                <label class="slds-checkbox__label" for="checkbox-4">
+                  <span class="slds-checkbox_faux"></span>
+                  <span class="slds-form-element__label slds-assistive-text">Mark Review proposals for EBC deck with larger team and have marketing review this complete</span>
+                </label>
+              </span>
+              <h3 class="slds-truncate" title="Review proposals for EBC deck with larger team and have marketing review this">
+                <a href="javascript:void(0);">
+                  <strong>Review proposals for EBC deck with larger team and have marketing review this</strong>
+                </a>
+              </h3>
+              <div class="slds-no-flex">
+                <span class="slds-icon_container slds-icon-utility-rotate" title="Recurring Task">
+                  <svg class="slds-icon slds-icon_xx-small slds-icon-text-default slds-m-left_x-small" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#rotate" />
+                  </svg>
+                  <span class="slds-assistive-text">Recurring Task</span>
+                </span>
+              </div>
+            </div>
+            <div class="slds-timeline__actions slds-timeline__actions_inline">
+              <p class="slds-timeline__date">9:00am | 3/20/17</p>
+              <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More Options for this item">
+                <svg class="slds-button__icon" aria-hidden="true">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down" />
+                </svg>
+                <span class="slds-assistive-text">More Options for this item</span>
+              </button>
+            </div>
+          </div>
+          <p class="slds-m-horizontal_xx-small"><a href="javascript:void(0);">You</a> created a task with <a href="javascript:void(0);">Charlie Gomez</a> </p>
+          <article class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small" id="task-item-base"
+            aria-hidden="true">
+            <ul class="slds-list_horizontal slds-wrap">
+              <li class="slds-grid slds-grid--vertical slds-size_1-of-2 slds-p-bottom_small">
+                <span class="slds-text-title slds-p-bottom_x-small">Name</span>
+                <span class="slds-text-body_medium slds-truncate" title="Charlie Gomez"><a href="javascript:void(0);">Charlie Gomez</a></span>
+              </li>
+              <li class="slds-grid slds-grid--vertical slds-size_1-of-2 slds-p-bottom_small">
+                <span class="slds-text-title slds-p-bottom_x-small">Related To</span>
+                <span class="slds-text-body_medium slds-truncate" title="Tesla Cloudhub + Anypoint Connectors"><a href="javascript:void(0);">Tesla Cloudhub + Anypoint Connectors</a></span>
+              </li>
+            </ul>
+            <div>
+              <span class="slds-text-title">Description</span>
+              <p class="slds-p-top_x-small">Need to finalize proposals and brand details before the meeting</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </li>
+  </ul>
+  	<button class="slds-button">Button Base</button>
+	<button class="slds-button slds-button_neutral">Button Neutral</button>
+	<button class="slds-button slds-button_brand">Button Brand</button>
+	<button class="slds-button slds-button_outline-brand">Button Outline Brand</button>
+	<button class="slds-button slds-button_destructive">Button Destructive</button>
+	<button class="slds-button slds-button_success">Button Success</button>
+	<div class="slds-grid">
+	  <div class="slds-col">Column 1</div>
+	  <div class="slds-col">Column 2</div>
+	  <div class="slds-col">Column 3</div>
+	</div>
+	<div class="slds-grid">
+	  <div class="slds-col slds-size_4-of-6">Column 1</div>
+	  <div class="slds-col slds-size_1-of-6">Column 2</div>
+	  <div class="slds-col slds-size_1-of-6">Column 3</div>
+	</div>
+	<div class="slds-grid slds-wrap">
+  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_3-of-4">A</div>
+  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4">B</div>
+</div>
+    <!-- MASTHEAD -->
+    <p class="slds-text-heading--label slds-m-bottom--small">
+      Salesforce Lightning Design System Trailhead Module
+    </p>
+    <!-- / MASTHEAD -->
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="myapp">
+      <!-- SECTION - BADGE COMPONENTS -->
+      <section aria-labelledby="badges">
+        <h2 id="badges" class="slds-text-heading--large slds-m-vertical--large">Badges</h2>
+        <div>
+          <span class="slds-badge">Badge</span>
+          <span class="slds-badge slds-theme--inverse">Badge</span>
+        </div>
+      </section>
+      <!-- / SECTION - BADGE COMPONENTS -->
+    </div>
+    <!-- / PRIMARY CONTENT WRAPPER -->
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->
+
+</body>
+</html>
+</apex:page>

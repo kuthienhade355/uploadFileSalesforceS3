@@ -1,0 +1,378 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"  controller="AngularWithVfPage">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlPaink="http://www.w3.org/1999/xlink" lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8"/>
+      <title>Salesforce Lightning Design</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"/>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"/>
+        <script>
+  			var app = angular.module('myApp',[]);
+        app.controller('controller',function($scope){
+          $scope.accounts = {!Accounts1}
+        });
+        // app.controller("TodoController", function($scope) {
+        //    $scope.filteredTodos = []
+        //   ,$scope.currentPage = 1
+        //   ,$scope.numPerPage = 10
+        //   ,$scope.maxSize = 5;
+        //                           $scope.makeTodos = function() {
+        //                               $scope.todos = {!Accounts1};
+        //                               for (i=1;i<=100;i++) {
+        //                                 $scope.todos.push({ text:"todo "+i, done:false});
+        //                               }
+        //                           };
+        //                           $scope.makeTodos(); 
+
+        //                           $scope.numPages = function () {
+        //                               return Math.ceil($scope.todos.length / $scope.numPerPage);
+        //                           };
+
+        //                           $scope.$watch("currentPage + numPerPage", function() {
+        //                               var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+        //                               , end = begin + $scope.numPerPage;
+
+        //                               $scope.filteredTodos = $scope.todos.slice(begin, end);
+        //     });
+        // });
+
+
+        app.controller("TodoController", function($scope) {
+           $scope.filteredTodos = [];
+           $scope.currentPage = 1;
+           $scope.numPerPage = 4;
+           $scope.maxSize = 5;
+                            $scope.makeTodos = function() {
+                              $scope.todos = {!Accounts1};
+                              console.log('$scope.todos' , $scope.todos);
+                              for (i=1;i<=100;i++) {
+                                  $scope.todos.push({ text:"todo "+i, done:false});
+                              }
+                            };
+                            $scope.makeTodos(); 
+
+                            $scope.$watch("currentPage + numPerPage", function() {
+                              var begin = (($scope.currentPage - 1) * $scope.numPerPage)
+                              , end = begin + $scope.numPerPage;
+
+                              $scope.filteredTodos = $scope.todos.slice(begin, end);
+                              console.log("$scope.filteredTodos" + $scope.filteredTodos);
+                            });
+                          });
+
+      // app.controller('TodoController', function($scope) {
+      //   $scope.filteredTodos = [];
+      //   $scope.itemsPerPage = 5;
+      //   $scope.currentPage = 4;
+      //                           $scope.makeTodos = function() {
+      //                             $scope.todos = {!Accounts1};
+      //                             for (i=1;i<=1000;i++) {
+      //                               $scope.todos.push({ text:'todo '+i, done:false});
+      //                             }
+      //                           };
+
+      //                           $scope.figureOutTodosToDisplay = function() {
+      //                             var begin = (($scope.currentPage - 1) * $scope.itemsPerPage);
+      //                             var end = begin + $scope.itemsPerPage;
+      //                             $scope.filteredTodos = $scope.todos.slice(begin, end);
+      //                           };
+
+      //                           $scope.makeTodos(); 
+      //                           $scope.figureOutTodosToDisplay();
+
+      //                           $scope.pageChanged = function() {
+      //                             $scope.figureOutTodosToDisplay();
+      //                           };
+
+      // });
+    </script>
+      <style type="text/css">
+          .wrapper-col{
+          	 margin-top: 20px;
+          }
+      </style>
+      <apex:slds />
+    </head>
+        <apex:remoteObjects >
+    			 <apex:remoteObjectModel name="Account" jsShorthand="account" fields="Name,AccountNumber,Phone,Description,LastModifiedDate"/>
+  	    </apex:remoteObjects>
+      <body>
+    <div class="slds-scope">
+      <p class="slds-text-heading--label slds-m-bottom--small">
+        Salesforce Lightning Design Demo 
+      </p>
+      <div class="myapp">
+      <section>
+        <h2 class="slds-text-heading--large slds-m-vertical--large">Account</h2>
+        <div>
+          <span class="slds-badge">Account</span>
+          <span class="slds-badge slds-theme--inverse">Account</span>
+        </div>
+      </section>
+       </div>
+      <div class="slds-page-header wrapper-col" role="banner">
+          <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+       		  <span class="slds-avatar slds-avatar_x-small">
+  			    <img src="https://toplist.vn/images/200px/cach-tri-ve-bo-chet-cho-cun-yeu-nha-ban-72976.jpg" alt="dog" />
+              </span>
+              <p class="slds-text-title_caps slds-line-height_reset">ManagerSeminar</p>
+              <h1 class="slds-page-header__title slds-truncate" title="ManagerSeminars">Account</h1>
+            </div>
+            <div class="slds-col slds-no-flex slds-grid slds-align-top">
+              <button class="slds-button slds-button_neutral">New Account</button>
+            </div>
+          </div>
+          <div class="slds-grid">
+            <div class="slds-col slds-align-bottom slds-p-top_small">
+              <p class="slds-text-body_small">COUNT items</p>
+            </div>
+          </div>
+	    </div>
+  
+  <!-- Pagination -->
+  <div ng-controller='TodoController'>
+    <table border='1'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Account Number</th>
+              <th>Description</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="account in filteredTodos">
+            <td>{{account.Name}}</td>
+              <td>{{account.AccountNumber}}</td>
+              <td>{{account.Description}}</td>
+              <td>{{account.Phone}}</td>
+            </tr>
+          </table>
+           <!--  <div data-pagination="" data-num-pages="numOfPages()" 
+        data-current-page="curPage" data-max-size="maxSize"  
+        data-boundary-links="true"></div> -->
+        
+        <pagination 
+          ng-model="currentPage"
+          total-items="todos.length"
+          max-size="maxSize"  
+          boundary-links="true">
+        </pagination>
+
+        <!-- <pagination boundary-links="true" 
+          max-size="3" 
+          items-per-page="itemsPerPage"
+          total-items="todos.length" 
+          ng-model="currentPage" 
+          ng-change="pageChanged()">
+        </pagination> -->
+    </div>
+
+
+  <!-- ListAccount -->
+  <div class="wrapper-col" ng-controller='controller'>
+      <table class="slds-page-header wrapper-col slds-table_bordered slds-table_cell-buffer slds-no-row-hover">
+      <thead>
+        <tr class="slds-text-heading_label">
+          <th scope="col">Name</th>
+          <th scope="col">Account Number</th>
+          <th scope="col slds-medium-size_3-of-4">Description</th>
+          <th scope="col">Phone</th>
+        </tr>
+      </thead>
+      <tbody ng-repeat='account in accounts| filter:query'>
+        <tr>
+          <td>{{account.Name}}</td>
+          <td>{{account.AccountNumber}}</td>
+          <td>{{account.Description}}</td>
+          <td>{{account.Phone}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="container">
+      <ul class="pagination">
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+      </ul> -->
+    </div>
+
+<apex:pageBlock >  
+   <apex:pageBlockButtons location="bottom" >
+     <apex:outputPanel id="myButtons">
+       <apex:form >
+            <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>
+            <apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>       
+            <apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="myPanel,myButtons"/>
+            <apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="myPanel,myButtons"/>       
+       </apex:form>
+     </apex:outputPanel>
+   </apex:pageBlockButtons>
+   <apex:pageBlockSection columns="1">
+   </apex:pageBlockSection>
+   <apex:pageBlockSection title="Total List Size: {!total_size}" collapsible="false">
+     <apex:outputPanel id="myPanel">
+       <apex:pageMessages id="theMessages" />
+         <apex:pageBlockTable value="{!accounts}" var="acc" align="center">
+              <apex:column value="{!acc.Name}" />
+              <apex:column value="{!acc.AccountNumber}" />
+              <apex:column value="{!acc.Description}" />
+              <apex:column value="{!acc.Phone}" />
+              <apex:facet name="footer">{!pageNumber} of {!totalPages}</apex:facet>
+         </apex:pageBlockTable>
+     </apex:outputPanel>
+   </apex:pageBlockSection>
+</apex:pageBlock>
+<!--             <div id="account-list" class="slds-p-vertical_medium"></div>
+ -->      <footer role="contentinfo" class="slds-p-around_large">
+              <div class="slds-grid slds-grid_align-spread">
+                <p class="slds-col">Account</p>
+                <p class="slds-col">&copy; Trần Minh Quân </p>
+              </div>
+         </footer>
+         </div>
+</body>
+
+
+
+  <!-- <script type="text/javascript">
+     ({
+   doInit: function(component, event, helper) {
+      var page = component.get("v.page") || 1;
+      var recordToDisply = component.find("recordSize").get("v.value");
+      helper.getAccounts(component, page, recordToDisply);
+ 
+   },
+ 
+   navigate: function(component, event, helper) {
+      var page = component.get("v.page") || 1;
+      var direction = event.getSource().get("v.label");
+      var recordToDisply = component.find("recordSize").get("v.value");
+      page = direction === "Previous Page" ? (page - 1) : (page + 1);
+      helper.getAccounts(component, page, recordToDisply);
+ 
+   },
+ 
+   onSelectChange: function(component, event, helper) {
+      var page = 1
+      var recordToDisply = component.find("recordSize").get("v.value");
+      helper.getAccounts(component, page, recordToDisply);
+   },
+ 
+})
+
+  </script> -->
+
+
+
+      <!--   <script>
+  (function() {
+    var account = new SObjectModel.account();
+    var outputDiv = document.getElementById('account-list');
+    var updateOutputDiv = function() {
+      account.retrieve(
+        { orderby: [{ LastModifiedDate: 'DESC' }] },
+        function(error, records) {
+          if (error) {
+            alert(error.message);
+          } else {
+            var dataTable = document.createElement('table');
+            dataTable.className = 'slds-page-header wrapper-col slds-table_bordered slds-table_cell-buffer slds-no-row-hover';
+            var tableHeader = dataTable.createTHead();
+            var tableHeaderRow = tableHeader.insertRow();
+            var tableHeaderRowCell1 = tableHeaderRow.insertCell(0);
+                tableHeaderRowCell1.appendChild(document.createTextNode('Name'));
+                tableHeaderRowCell1.setAttribute('scope', 'col');
+                tableHeaderRowCell1.setAttribute('class', 'slds-text-heading_label');
+            var tableHeaderRowCell2 = tableHeaderRow.insertCell(1);
+                tableHeaderRowCell2.appendChild(document.createTextNode('AccountNumber'));
+                tableHeaderRowCell2.setAttribute('scope', 'col');
+                tableHeaderRowCell2.setAttribute('class', 'slds-text-heading_label');
+            var tableHeaderRowCell3 = tableHeaderRow.insertCell(2);
+                tableHeaderRowCell3.appendChild(document.createTextNode('Phone'));
+                tableHeaderRowCell3.setAttribute('scope', 'col');
+                tableHeaderRowCell3.setAttribute('class', 'slds-text-heading_label');
+            var tableHeaderRowCell4 = tableHeaderRow.insertCell(3);
+                tableHeaderRowCell4.appendChild(document.createTextNode('Description'));
+                tableHeaderRowCell4.setAttribute('scope', 'col');
+                tableHeaderRowCell4.setAttribute('class', 'slds-text-heading_label');
+            var tableBody = dataTable.appendChild(document.createElement('tbody'))
+            var dataRow, dataRowCell1, dataRowCell2,dataRowCell3,dataRowCell4,recordName, recordId;
+                records.forEach(function(record) {
+                  dataRow = tableBody.insertRow();
+                  dataRowCell1 = dataRow.insertCell(0);
+                  recordName = document.createTextNode(record.get('Name'));
+                  dataRowCell1.appendChild(recordName);
+                  dataRowCell2 = dataRow.insertCell(1);
+                  recordId = document.createTextNode(record.get('AccountNumber'));
+                  dataRowCell2.appendChild(recordId);
+                  dataRowCell3 = dataRow.insertCell(2);
+                  recordId = document.createTextNode(record.get('Phone'));
+                  dataRowCell3.appendChild(recordId);
+                  dataRowCell4 = dataRow.insertCell(3);
+                  recordId = document.createTextNode(record.get('Description'));
+                  dataRowCell4.appendChild(recordId);
+                });
+            if (outputDiv.firstChild) {
+              outputDiv.replaceChild(dataTable, outputDiv.firstChild);
+            } else {
+              outputDiv.appendChild(dataTable);
+            }
+          }
+        }
+      );
+    }
+    updateOutputDiv();
+  })();
+    </script> -->
+    <!-- $scope.sortonPage = function(keyname){
+          // $scope.sortKey = keyname;   //set the sortKey to the param passed
+          // $scope.reverse = !$scope.reverse; 
+          // $scope.initDataContact();
+          $scope.propertyName  = keyname;   //set the sortKey to the param passed
+           $scope.filteredList = $filter('orderBy')($scope.filteredList, $scope.propertyName, $scope.reverse);
+          for(var i =0 ; i < $scope.filteredList.length ; i++){
+              $scope.filteredList[i].index = i+1;
+            }
+          $scope.reverse = ($scope.propertyName  == keyname)? !$scope.reverse : false; 
+          if ($scope.reverse){
+            iconName =  $scope.up;
+            iconAvatar = $scope.down;
+          } else{
+             iconName = $scope.down;
+            iconAvatar = $scope.up;
+          }
+           
+           if (keyname == 'Email') {
+            $scope.Header[0] = iconName;
+          } else if (keyname == 'Name') {
+            $scope.Header[1] = iconName;
+          } else if (keyname == 'Phone'){
+            $scope.Header[2] = iconName;
+          }else if (keyname == 'Account.Name'){
+            $scope.Header[3] = iconName;
+          }else if(keyname == 'Custom_Image__c'){
+            $scope.Header[4] = iconAvatar;
+          }else if(keyname == 'Owner.Name'){
+            $scope.Header[5] = iconName;
+          }
+          $scope.pagination();
+        }
+        $scope.pagination = function(){
+          console.log('pagination pass')
+          $scope.ItemsByPage = filteredListService.paged($scope.filteredList, $scope.pageSize);
+          if($scope.ItemsByPage.length == 0){
+            $scope.hiddenButton = true;
+          }else{
+            $scope.hiddenButton = false;
+          }
+
+           $scope.lastPage = $scope.ItemsByPage.length - 1;
+          console.log('item page' , $scope.ItemsByPage);
+
+        }
+        $scope.Header = ['', '', '' , '', '' , '']; -->
+    </html>
+</apex:page>

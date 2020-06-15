@@ -1,0 +1,275 @@
+<apex:page cache="false" showHeader="false" sidebar="true" controller="ExperienceCC" action="{!init}">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+	<head>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js"></script>
+		
+		<title>Experience</title>
+		<apex:slds />
+		<style type="text/css">
+		.wrapper-col{
+			padding: 10px;
+		}
+		.slds-scope .slds-dropdown__item>a:focus{
+			background-color: rgb(210, 0, 0)
+		}
+		.slds-scope .slds-dropdown__item>a:hover{
+    		background-color: #34becd;
+		}
+		.wrapper-silder-right{
+			padding:10px;
+		}
+		.slds-scope .slds-dropdown{
+			width: 20rem;
+			margin-top:0;
+		}
+		a{
+			color: white;
+		}
+		strong{
+			color: #c3a200;
+		}
+		.container-col{
+			padding-bottom: 50px;
+		}
+		a.slds-th__action.slds-text-link_reset.wrapper-button {
+    		background: white;
+    		border: 1px solid;
+		}
+		a.slds-th__action.slds-text-link_reset.wrapper-button:hover {
+		    background: #a2c8d4;
+		}
+		.slds-scope .slds-border_top, .slds-scope .slds-border--top {
+		    border-top: 1px solid white;
+		}
+		.slds-scope .slds-th__action {
+			height: 3.5rem;
+		}
+		.slds-scope .slds-text-heading_small, .slds-scope .slds-text-heading--small {
+			padding-bottom: 2px;
+		    font-size: 1.068rem;
+		    line-height: 2rem;
+		    font-family: sans-serif;
+		    font-weight: 700;
+		}
+		.slds-scope .slds-dropdown{
+			padding: 0;
+		}
+		.slds-scope .slds-dropdown__item>a {
+		    /*min-height: 3.5rem;*/
+		    font-size: 1.125rem;
+    		font-weight: 500;
+    		color: white;
+		}
+		p{
+			font-size: 1rem;
+			font-family: sans-serif;
+		}
+		ul.slds-dropdown__list.background-menu{
+			background-color: rgba(112, 110, 107, 0.8);
+		}
+		a.active.background-title {
+			height: 70px;
+   			background-color: rgb(210, 0, 0)
+		}
+		.fa, .fas {
+    		font-size: 1.125rem;
+		}
+		.slds-border_top.title {
+		    border-top: 1px solid;
+		    font-size: -webkit-xxx-large;
+		    font-family: -webkit-body;
+		}
+		.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		min-width: 24vw;
+		}
+		@media screen and (max-width: 1280px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+	    		width: 23vw;
+			}
+		}
+		@media screen and (max-width: 767px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		min-width: 47.5vw;
+			}
+			.container-col {
+    		padding-bottom: 20px;
+			}
+		}
+		@media screen and (max-width: 687px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		min-width: 47vw;
+			}
+		}
+		@media screen and (max-width: 520px) {
+	      	p{
+	      		font-size: 0.8rem;
+	      	}
+		}
+		@media screen and (max-width: 479px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		    min-width: 92vw;
+			}
+		}
+		@media screen and (max-width: 320px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		    min-width: 81.5vw;
+			}
+		}
+	</style>
+	</head>
+	
+	<body ng-app='myApp' ng-controller='body'>
+		<div class="slds-grid slds-wrap">
+		  <!-- table-1 -->
+		  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_3-of-4 wrapper-col"  ng-controller='experience'>
+		  		<div class="slds-border_top">
+		  			<div class="slds-page-header">
+					  <div class="slds-page-header__row">
+					    <div class="slds-page-header__col-title">
+					      <div class="slds-media">
+					        <div class="slds-media__figure">
+					          <span class="slds-icon_container slds-icon-standard-opportunity" title="opportunity">
+					            <span class="slds-assistive-text">opportunity</span>
+					          </span>
+					        </div>
+					        <div class="slds-media__body">
+					          <div class="slds-page-header__name">
+					            <div class="slds-page-header__name-title">
+					              <h1>
+					                <span class="slds-page-header__title slds-truncate" title="Experience">Experience</span>
+					              </h1>
+					            </div>
+					          </div>
+					          <p class="slds-page-header__name-meta"></p>
+					        </div>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<div ng-repeat='e in experience'>
+						<div class="slds-text-heading_large">
+							<div ng-bind-html="e.Name__c"></div>
+						</div>
+						<div ng-bind-html='trustAsHtml(e.Description__c)'></div>				
+					</div>
+		  		</div>		  				  		
+		  </div>
+		  <!-- table-2 -->
+		  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4" >
+		  	<div class="wrapper-silder-right">
+			  	<div class="slds-grid slds-grid_vertical">
+			  		<!-- infoEmployee --> 
+			  		<div class="slds-col container-col" >
+			  			<div class="wrapper-col" style="background: rgba(169, 169, 169, 0.2)">
+				  			<div class="slds-text-heading_small">{{NameUser}}</div>
+				  			<p>Roles: <strong>{{Role}}</strong></p>
+				  			<br/>
+				  			<p>First Login : {{FirstLogin}}</p>
+				  			<p>Last Login : {{LastLogin}}</p>
+				  			<p>Expried Date : {{ExpiredDate}}</p>
+				  			<br/>
+				  			<p style="font-family: unset;">MemberId</p>
+				  			<p>{{MemberId}}</p>
+				  			<br/>
+				  			<p>Email</p>
+				  			<p>{{Email}}</p>
+				  			<br/>
+							<a class="slds-th__action slds-text-link_reset wrapper-button" ng-click="formLogOut()">
+								<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+					            	<span class="slds-truncate slds-text-heading_small " title="Logout" style="color: #224c71;">Logout</span>
+					          	</div>
+								<span><i class="fas fa-unlock"/></span>
+							</a>
+
+
+					       <!--  <apex:form >
+							
+									<apex:commandButton styleClass="slds-th__action slds-text-link_reset wrapper-button" action="{!getLogOut}" value="Logout"/>
+			
+							</apex:form> -->
+				  		</div>
+			  		</div>
+			  		<!-- Menu function -->
+			  		<div class="slds-col" ng-controller='function'>
+			  			<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" >
+						  <div class="slds-dropdown slds-dropdown_left slds-dynamic-menu">
+						    <ul class="slds-dropdown__list" role="menu" aria-label="Show More" ng-repeat = 'e in functions' ng-show="!e.ParentID__c && e.Active__c">
+						      <li class="slds-dropdown__item" role="presentation">
+						        <a role="menuitem" tabindex="0" class="active background-title" ng-click="changeSection('open')" >
+						          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+					            	<span class="slds-truncate" title="Function A">{{e.Title__c}}</span>
+						          	</div>
+									<span><i class="fas fa-sort-down"/></span>
+						        </a>
+						        <div class="slds-dropdown slds-dropdown_submenu slds-dropdown_submenu-left slds-dynamic-menu" ng-show="section === 'open'" style="border-top: 10px solid white;">
+						          <ul class="slds-dropdown__list background-menu" role="menu" aria-label="Menu Item One" ng-repeat = 'e in functions' ng-show="e.ParentID__c  && e.Active__c">
+						            <li class="slds-dropdown__item slds-border_top" role="presentation">
+						              <a href="javascript:void(0);" role="menuitem" tabindex="0">
+						                <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+						            		<span class="slds-truncate" title="Function B" style="font-weight: 200;">{{e.Title__c}}</span>
+							          	</div>
+										<span><i class="fas fa-chevron-right" style="font-size: 0.8rem;"></i></span>
+						              </a>
+						            </li>
+						          </ul>
+						        </div>
+						      </li>
+						    </ul>
+						  </div>
+						</div>
+			  		</div>
+			  	</div>
+		  	</div>
+		  </div>
+		</div>
+	</body>
+	<script type="text/javascript">
+			var app = angular.module('myApp',['ngSanitize']);
+			app.controller('body' ,function($scope){
+				var buttonSection  = 'open';
+				$scope.formLogOut = function(){
+					var delete_cookie = function(name) {
+						document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+						};
+					delete_cookie('apex__urlId');
+				    window.location = '/apex/login';
+				}
+				$scope.openSection =function(name){
+    				if($scope.buttonSection === name){
+    				   $scope.buttonSection = 'close';
+    				}else{
+    					$scope.buttonSection ='open';
+    				}
+    			}
+				$scope.NameUser = '{!customUser.NameUser__c}';
+				$scope.Role = '{!customUser.Role__c}';
+				$scope.MemberId = '{!customUser.MemberId__c}';
+				$scope.ExpiredDate = '{!customUser.ExpriedDate__c}';
+				$scope.Email ='{!customUser.Email__c}';
+				$scope.LastLogin = '{!customUser.LastLogin__c}';
+				$scope.FirstLogin = '{!customUser.FirstLogin__c}';
+			})
+			.controller('experience',function($scope,$sce){
+				$scope.experience = JSON.parse('{!Experience1}');
+				$scope.trustAsHtml = function(string) {
+				    return $sce.trustAsHtml(string);
+				};
+			})
+			.controller('function',function($scope){
+				var section = 'open';
+				var functionJSON = JSON.parse('{!Functions}');
+				$scope.functions = functionJSON;
+				$scope.changeSection =function(name){
+    				if($scope.section === name){
+    				   $scope.section = 'close';
+    				}else{
+    					$scope.section ='open';
+    				}
+    			}
+			})
+		</script>
+	</html>
+</apex:page>

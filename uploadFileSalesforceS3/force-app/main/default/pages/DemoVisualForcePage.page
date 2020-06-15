@@ -1,0 +1,27 @@
+<apex:page showHeader="false" applyHtmlTag="false" docType="html-5.0" controller="DemoTextClass"> 
+        <head>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+            <script>
+                var App = angular.module('myApp',[]);
+            	App.controller('ctrl',function($scope){
+                    $scope.helloword = 'hello ! Come here'
+                    });
+            	App.controller('ctrlHello',function($scope){
+                    $scope.hello = {!hello}
+                    });
+            </script>
+        </head>
+        <body ng-app="myApp" >
+            <div ng-controller='ctrl'>
+               <h1>HelloWord</h1>
+            <p>
+                h1:<strong><span>{{helloword}}</span></strong>
+            </p>
+            </div>
+            <div ng-controller='ctrlHello'>
+                 <p>
+                h2:<strong><span>{{hello}}</span></strong>
+            </p>
+            </div>
+        </body>
+</apex:page>

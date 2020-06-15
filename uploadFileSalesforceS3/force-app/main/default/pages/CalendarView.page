@@ -1,0 +1,61 @@
+<apex:page id="pg" standardStylesheets="false"  Controller="CalendarController" action="{!pageLoad}">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print"  />
+   <script type="text/javascript"> 
+    $(function() {
+
+       var st = null; 
+        //Call the fullCallendar method. You can replace the '#calendar' with the ID of the dom element where you want the calendar to go. 
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'},
+            editable: true,
+            droppable: true,
+        events:[
+            <apex:repeat value="{!events}" var="e">{
+                id:"{!e.eventId}",
+                title: "{!e.eventTitle}",
+                start: '{!e.eventStart}',
+                end: '{!e.eventEnd}',
+                url: '{!e.url}',
+                allDay: {!e.allDay}                 },
+                </apex:repeat>
+            ],
+
+            eventDrop: function(event, delta, revertFunc) {
+                if (!confirm("Are you sure about this change?")) {
+                    revertFunc();
+                }
+                setEvnt(event.id, event.start.format(), event.end.format()); 
+            },
+
+             eventAfterRender: function (event, element, view) {
+                    var dt = new Date();
+                    if (event.start < dt && event.end > dt) {
+                        element.css('background-color', '#00CDCD');
+                    } else if (event.start < dt && event.end < dt) {
+                        element.css('background-color', '#77DD77');
+                    } else if (event.start > dt && event.end > dt) {
+                        element.css('background-color', '#86C67C');
+                    }
+                }                      
+        });
+
+    });
+    </script>
+    <apex:outputPanel id="calPanel">
+        <apex:form id="theForm">
+            <apex:actionFunction name="setEvnt" action="{!setEvent}" reRender="pg" >
+                <apex:param value="" name="item" assignTo="{!eventIdTemp}"/>
+                <apex:param value="" name="test" assignTo="{!st}"/>
+                <apex:param value="" name="test1" assignTo="{!ed}"/> 
+            </apex:actionFunction> 
+            <div id="calendar"></div>
+        </apex:form>
+    </apex:outputPanel> 
+</apex:page>

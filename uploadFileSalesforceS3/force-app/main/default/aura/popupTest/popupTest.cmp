@@ -1,0 +1,16 @@
+<aura:component  controller="PopupFormC"
+    implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId,force:hasSObjectName"
+>
+            <div class="slds-modal__header">
+                ダイアログ
+            </div>
+            <div class="slds-grid slds-p-top_medium">
+            	<div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                        <lightning:input label="" name="" value=""/> 
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <lightning:button label="閉じる" onclick="{!c.saveModal}" />
+                <lightning:button label="登録" onclick="{!c.closeNewModal}" />
+            </div>
+</aura:component>

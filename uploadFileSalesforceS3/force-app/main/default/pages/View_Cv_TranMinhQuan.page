@@ -1,0 +1,286 @@
+<apex:page showHeader="false" applyHtmlTag="false" docType="html-5.0" controller="Model_CV_TranMinhQuan">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"/>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+   <script>
+      
+     var App = angular.module('myApp', []);
+      
+     App.controller('body', function ($scope) {   
+         $scope.address = '{!address}';
+         $scope.phone = '{!phone}';
+         $scope.email = '{!email}';
+         $scope.website = '{!website}';
+     })
+      .controller('booking',function($scope){
+        console.log('comming');
+        var json = JSON.parse('{!JSONExperiences}');
+        $scope.e2 = json ;
+        $scope.name2 = '{!name}';
+        console.log('comming2');
+      })
+      .controller('experience',function($scope){
+        console.log('experience controller work');
+          var json = JSON.parse('{!JSONExperiences}');
+          $scope.e = json ;
+          $scope.name = '{!name}';
+        console.log('scope.e' , $scope.e)
+      })
+      .controller('educations',function($scope){
+        console.log('education controller work');
+        var json = JSON.parse('{!JSONEducations}');
+        $scope.educations = json;
+      })
+      .controller('skills',function($scope){
+        console.log('skills controller work!');
+        var json = JSON.parse('{!JSONSkills}')
+        console.log('json' , json);
+        $scope.skills = json;
+        console.log('$scope.skills' , $scope.skills);
+      })
+      .controller('objective',function($scope){
+        console.log('objective controller work!');
+        var json = JSON.parse('{!JSONObjective}');
+        $scope.objective = json;
+        console.log('objective', $scope.objective);
+      })
+      .controller('projectUndertaken',function($scope){
+        console.log('projectUndertaken controller work');
+        var json = JSON.parse('{!JSONProjectUndertaken}');
+        $scope.projectUndertakens = json;
+      })
+      .controller('hobby',function($scope){
+        console.log('hobby controller work!');
+        var json = JSON.parse('{!JSONHobbies}');
+        $scope.hobbies = json;
+      })
+   </script>
+<style type="text/css">
+    .wrapper-custom{
+      height: 100vh;
+      display: flex;
+      flex-direction: row;
+
+    }
+    .wrapper-left{
+      display: flex;
+        flex-direction: column;
+        color: white;
+        height: 100vw;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .wrapper-left .wrapper-content-image img{
+      padding: 3vw 0;
+      width: 35vw;
+    }
+    .wrapper-right{
+      display: flex;
+      flex-direction: column;
+      padding: 8vh;
+    }
+    .wrapper-right h1{
+      font-size: 4vw;
+      font-weight: 700;
+    }
+    .wrapper-right h2{
+      color: #943994;
+      font-size: 3vw;
+      font-weight: 400;
+    }
+    .wrapper-left .wrapper-content{
+      padding: 2vh 8vh;
+      text-align: -webkit-left;
+      font-size: 2vw;
+    }
+    .wrapper-left .wrapper-content img{
+      width: 7vh;
+    }
+    .wrapper-content-image{
+      text-align: center;
+    }
+    .wrapper-objective{
+      padding: 0 8vh;
+      font-size: 2vw;
+    }
+    .wrapper-right p{
+      font-size: 1.3vw;
+    }
+    .wrapper-objective p{
+      padding :0;
+      margin :0;
+    }
+  </style>
+</head>
+<body ng-app="myApp"  >
+  <!-- <table  ng-controller="body">
+      <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>website</th>
+      </tr>
+      <tr>
+          <td>{{name}}</td>
+          <td>{{address}}</td>
+          <td>{{phone}}</td>
+          <td>{{email}}</td>
+          <td>{{website}}</td>
+      </tr>
+    </table>
+
+     <div ng-controller='objective'>
+      <table>
+        <tr>
+          <th>Objective</th>
+        </tr>
+        <tr ng-repeat='objective in objective| filter:query '>
+          <td>{{objective}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div ng-controller='experience'>
+      <table>
+        <tr>
+          <th>fromYear</th>
+          <th>toYear</th>
+          <th>description</th>
+        </tr>
+        <tr ng-repeat='experience in e| filter:query '>
+          <td>{{experience.fromYear}}</td>
+          <td>{{experience.toYear}}</td>
+          <td>{{experience.description}}</td>
+        </tr>
+      </table>
+    </div>
+    <div ng-controller='educations'>
+      <table>
+        <tr>
+          <th>fromYear</th>
+          <th>toYear</th>
+          <th>title</th>
+          <th>place</th>
+          <th>department</th>
+        </tr>
+        <tr ng-repeat='education in educations| filter:query '>
+          <td>{{education.fromYear}}</td>
+          <td>{{education.toYear}}</td>
+          <td>{{education.title}}</td>
+          <td>{{education.place}}</td>
+          <td>{{education.department}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div ng-controller='skills'>
+      <table>
+        <tr>
+          <th>Skills</th>
+        </tr>
+        <tr ng-repeat='skill in skills| filter:query '>
+          <td>{{skill}}</td>
+        </tr>
+      </table>
+    </div>
+
+     <div ng-controller='projectUndertaken'>
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>description</th>
+          <th>linkProject</th>
+        </tr>
+        <tr ng-repeat='projectUndertaken in projectUndertakens| filter:query '>
+          <td>{{projectUndertaken.title}}</td>
+          <td>{{projectUndertaken.description}}</td>
+          <td>{{projectUndertaken.linkProject}}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div ng-controller='hobby'>
+      <table>
+        <tr>
+          <th>Hobby</th>
+        </tr>
+        <tr ng-repeat='hobby in hobbies| filter:query '>
+          <td>{{hobby}}</td>
+        </tr>
+      </table>
+    </div> -->
+    <div class="wrapper-custom">
+    <div class="wrapper-left" style="background-image: url('https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/40368408_128443304764513_1041293973143945216_n.jpg?_nc_cat=0&oh=74327832d9535cc480dec3879901b244&oe=5BFEB6E6')" ng-controller="body">
+      <div class="wrapper-content-image">
+        <img src="https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.0-9/40253109_128443378097839_691934740512505856_n.jpg?_nc_cat=0&oh=dab4781c089038f6df8314c6f0406c87&oe=5C341322"/>
+      </div>
+      <div class="wrapper-content">
+        <i class="fas fa-map-marker-alt"/>
+       {{address}}
+      </div>  
+      <div class="wrapper-content">
+        <i class="fas fa-mobile-alt"/>
+        {{phone}} 
+      </div>
+      <div class="wrapper-content">
+        <i class="fas fa-envelope-square"/>
+        {{email}}
+      </div>
+      <div class="wrapper-content">
+        <i class="fas fa-comments"/>
+        {{website}}
+      </div>
+      <div class="wrapper-objective" ng-controller='objective'>
+        <h1>OBJECTIVE</h1>
+        <p ng-repeat='objective in objective| filter:query '>
+           {{objective}}
+        </p>
+      </div>
+    </div>
+    <div class="wrapper-right">
+      <div ng-controller='experience'>
+        <div>
+          <h1>{{name}}</h1>
+        </div>
+        <br/>
+        <div>
+          <h2>EXPERIENCE</h2>
+          <p ng-repeat='experience in e| filter:query'>
+            <i><strong>From {{experience.fromYear}}-{{experience.toYear}} :</strong></i> {{experience.description}}
+          </p>
+        </div>
+      </div>
+      <div ng-controller='educations'>
+        <h2>EDUCATION</h2>
+        <p ng-repeat='education in educations| filter:query '>
+          <i><strong>From {{education.fromYear}}-{{education.toYear}} :</strong></i>
+          {{education.title}} of {{education.place}} : {{education.department}}
+        </p>
+      </div>
+      <div ng-controller='skills'>
+        <h2>SKILL</h2>
+        <p ng-repeat='skill in skills| filter:query '>
+          {{skill}}
+        </p>
+      </div>
+      <div ng-controller='projectUndertaken'>
+        <h2>PROJECT UNDERTAKEN</h2>
+        <p ng-repeat='projectUndertaken in projectUndertakens| filter:query '>
+          -{{projectUndertaken.title}}: {{projectUndertaken.description}}
+          <br/>
+          LinkProject : {{projectUndertaken.linkProject1}}
+          LinkProject : {{projectUndertaken.linkProject2}}
+        </p>
+      </div>
+      <div ng-controller='hobby' >
+        <h2>HOBBY</h2>
+        <p ng-repeat='hobby in hobbies| filter:query '>
+          {{hobby}}
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</apex:page>

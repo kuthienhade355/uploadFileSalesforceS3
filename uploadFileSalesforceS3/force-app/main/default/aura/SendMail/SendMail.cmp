@@ -1,0 +1,340 @@
+<aura:component controller="sendEmailLCCC" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="recipients" type="Recipient__c[]"/>
+    <aura:attribute name="accept" type="List"/>
+    <aura:attribute name="multiple" type="Boolean" default="true"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="false"/>
+    <aura:attribute name="to1" type="String"/>
+    <aura:attribute name="from1" type="String"/>
+    <aura:attribute name="bcc1" type="String"/>
+    <aura:attribute name="cc1" type="String"/>
+    <aura:attribute name="subject1" type="String"/>
+    <aura:attribute name="body1" type="String"/>
+    <aura:attribute name="attachment1" type="String"/>
+    <aura:attribute name="nameAttachment1" type="String"/>
+    <aura:attribute name="files" type="List"/>
+    <aura:attribute name="atlist" type="String"/>
+    <aura:attribute name="fileName" type="String"/>
+    <aura:attribute name="documentId" type="String"/>
+    <aura:attribute name="documentIdReply" type="String"/>
+    <aura:attribute name="arrFile" type="List"/>
+    <aura:attribute name="arrFileReply" type="List"/>
+    <aura:attribute name="rowId" type="String"/>
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="truthy" type="Boolean" default="false"/>
+    <aura:attribute name="indx" type="Integer" default="10" /> 
+    <aura:attribute name="isCheckRichText" type="Boolean" default="false"/>
+    <aura:attribute name="errorMessage" type="String" default="Not empty value"/>
+    <aura:attribute name="validity" type="Boolean" default="true"/>
+    <aura:attribute name="isCheckSizeFile" type="Boolean" default="false"/>
+    <aura:attribute name="isCheckSizeFileReply" type="Boolean" default="false"/>
+    
+    <!-- attributes datatable -->
+    <aura:attribute name="allData" type="List"/>
+    <aura:attribute name="currentPageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="2"/>
+    <aura:attribute name="totalPages" type="Integer" default ="0"/>
+    <aura:attribute name="pageList" type="List"/>
+    <aura:attribute name="inputCmp" type="Integer"/>
+	<aura:attribute name="isNotErrors" type="Boolean" default="true"/>
+    <!-- save temporary variable -->
+        <aura:attribute name="temporaryFile" type="list"/>
+    <!-- fix upload file1 -->
+    
+    <!-- Attribute Search incident-->
+    
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'IT Assets', 'value': 'option1'},
+    {'label': 'Incident', 'value': 'option2'}
+    ]"/>
+    <aura:attribute name="value" type="String" default="option1"/>
+    
+	<aura:attribute name="data1" type="Object"/>
+    <aura:attribute name="columns1" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute name="maxRowSelection" type="Integer" default="5"/>  
+    <aura:attribute name="resultSearch" type="List"/>
+    <aura:attribute name="selectedCities" type="List" default="[]" />
+    <!-- Attribute Search incident1-->
+    
+    
+    <p>Message : {!v.message}</p>
+    <div style="background-color:white;padding:10px;">
+        	<lightning:tabset>
+                <lightning:tab label="Send Email">
+                    <div class="row">
+                        <ui:inputText  label="To" aura:id="inputTo"  onError="{!c.handleError}" />
+                        <ui:inputText  label="CC" aura:id="inputCC"  onError="{!c.handleError}" />
+                        <ui:inputText  label="BCC" aura:id="inputBBC" onError="{!c.handleError}" />
+                        <ui:inputText  label="Subject" aura:id="inputSubject" onError="{!c.handleError}" />
+                        <label class="slds-form-element__label">Body</label>
+                        <lightning:inputRichText aura:id="inputBody" messageWhenBadInput="{!v.errorMessage}" valid="{!v.validity}">
+                             <lightning:insertImageButton/>
+    					</lightning:inputRichText>
+                            <lightning:fileUpload  
+                               aura:id="fileUploadId"
+                               name="fileUploader"
+                               label= "Upload Image"
+                               multiple="{!v.multiple}"
+                               accept="{!v.accept}"
+                               disabled="{!v.disabled}"
+                               recordId="{!v.recordId}"
+                               onuploadfinished="{! c.handleUploadFinished }"/>
+                        <aura:if isTrue="{!v.isCheckSizeFile}">
+                            <ui:message title="Error" severity="error" closable="true">
+                                    Not upload file greater than 3MB check file again !
+                            </ui:message>
+                        </aura:if>
+                        <aura:if isTrue="{!v.documentId}">
+                            	<table  border="1">
+                                            <tr>
+                                                <td>No.</td>
+                                                <td>Title</td>
+                                                <td>Option</td>
+                                            </tr>
+                                    	<aura:iteration items="{!v.arrFile}" var="acc" indexVar="index">
+                                            <tr>
+                                                <td>{!index+1}</td>
+                                                <td><a href="{!'/sfc/servlet.shepherd/version/download/'+acc.Id}">{!acc.Title}</a></td>
+                                           		<td><button type="button" onclick="{! c.deleteFile }" id='{!acc.Id}'>Delete</button></td>
+                                            </tr>
+                                        </aura:iteration>
+                            	</table>
+                        </aura:if>
+                        <lightning:button variant="brand" label="Send Email" title="Send Email" onclick="{! c.handleClick }"/>
+                    </div>
+                    
+                </lightning:tab>
+                
+                <lightning:tab label="List Email">
+
+                   
+                        <!--pagination-->
+                    <lightning:button variant="brand" label="Check Api Class" title="Check Api Class" onclick="{!c.getClassName}"/>
+                    <lightning:card title="Datatable With Pagination">
+                    <lightning:layout multipleRows="true" horizontalAlign="center">
+                        <lightning:layoutItem padding="around-small" size="12">
+                            <lightning:datatable
+                                                 aura:id="accountDataTable"
+                                                 columns="{! v.columns }"
+                                                 data="{! v.data }"
+                                                 keyField="Id"
+                                                 hideCheckboxColumn="true"
+                                                 onrowaction="{! c.handleRowAction }"/>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem padding="around-small" flexibility="auto">
+                            <lightning:button label="First" iconName="utility:left" iconPosition="left"
+                                              onclick="{!c.onFirst}" disabled="{! v.currentPageNumber == 1}"/>
+                            <lightning:button iconName="utility:chevronleft" iconPosition="left"
+                                              onclick="{!c.onPrev}" disabled="{! v.currentPageNumber == 1}"/>
+                            <span class="slds-p-horizontal_x-small">
+                                <a onclick="{!c.processMe}" name="1" 
+                                   class="{! (v.currentPageNumber == 1) ? 'selected' : ''}">1</a>
+                            </span>
+                            
+                            <aura:if isTrue="{!v.totalPages>10}">
+                                <aura:if isTrue="{!v.currentPageNumber>4}">
+                                    <span class="slds-p-horizontal_xxx-small">
+                                        <a>...</a>
+                                    </span>
+                                </aura:if>
+                            </aura:if> 
+                            
+                              <aura:iteration items="{!v.pageList}" var="item">
+                                <span class="slds-p-horizontal_x-small">
+                                    <a onclick="{!c.processMe}" name="{!item}"
+                                       class="{! (v.currentPageNumber == item) ? 'selected' : ''}">{!item}</a>
+                                </span>	
+                              </aura:iteration>
+                            <aura:if isTrue="{!v.totalPages-4 > v.currentPageNumber}">
+                                <span class="slds-p-horizontal_xxx-small">
+                                    <a>...</a>
+                                </span>
+                            </aura:if>
+
+                            
+                            <span class="slds-p-horizontal_x-small">
+                                <a onclick="{!c.processMe}" name="{!v.totalPages}"
+                                   class="{! (v.currentPageNumber == v.totalPages) ? 'selected' : ''}">
+                                    <aura:if isTrue="{!v.totalPages > 1}">{!v.totalPages}                            
+                                    </aura:if>
+								</a>
+                            </span>
+
+                            <lightning:button iconName="utility:chevronright" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onNext}"/>
+                            <lightning:button label="Last" iconName="utility:right" iconPosition="right" 
+                                              disabled="{! v.currentPageNumber == v.totalPages}" onclick="{!c.onLast}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </lightning:card>
+                </lightning:tab>
+                <lightning:tab label="Mail Filter">
+
+                    <!--Search Api-->
+                     <div class="modal-header slds-modal__header slds-size_1-of-1">
+                        <h4 class="title slds-text-heading--medium" >Mail Filter</h4>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+                        <div class="slds-grid slds-gutters">
+                          <div class="slds-col slds-size_1-of-5 slds-border_right
+" >
+                            <lightning:radioGroup name="radioGroup"
+                              label="View options"
+                              options="{! v.options }"
+                              value="{! v.value }"
+                              type="radio"
+                              onchange="{! c.handleChange }"/>	
+                            </div>
+                          <div class="slds-col slds-size_1-of-5">
+                            <ui:inputText  label="AssetID" aura:id="inputAssetID" />
+                                <aura:iteration var="a" items="{!v.data1}" indexVar="indx">
+                                    <aura:if isTrue="{!a.IT_Asset__r.Name}">
+                                    <ui:inputCheckbox class="myCheckbox"
+                                                      aura:id="checkbox" 
+                                                      text="{!a.IT_Asset__c}"
+                                                      name="{!indx}"
+                                                      label="{!a.IT_Asset__r.Name}" 
+                                                      change="{!c.selectoptionvalue}"/>
+                                    </aura:if>
+                                    <aura:if isTrue="{!a.Incident__r.Name}">
+                                        <ui:inputCheckbox class="myCheckbox"
+                                                          aura:id="checkbox" 
+                                                          text="{!a.Incident__r}"
+                                                          name="{!indx}"
+                                                          label="{!a.Incident__r.Name}" 
+                                                          change="{!c.selectoptionvalue}"/>
+                                    </aura:if>
+                                </aura:iteration>
+                          </div>
+                          <div class="slds-col slds-size_1-of-5">
+                            <ui:inputText  label="Name" aura:id="inputName" />
+                          </div>
+                          <div class="slds-col slds-size_1-of-5">
+                            <ui:inputText  label="Mail Subject" aura:id="inputMailSubject" />
+                          </div>
+                          <div class="slds-col slds-size_1-of-5">
+                            <lightning:button variant="brand" label="Search" title="Search" onclick="{!c.searchAsset}"/>
+                          </div>
+                          </div>
+                    </div>
+                    <div class="slds-modal__footer" >
+                        <div class="slds-grid slds-grid_align-end">
+                    		<lightning:button variant="brand" label="SearchAll" title="SearchAll" onclick="{!c.searchAll}"/>
+                    	</div>
+                   	</div>
+                </lightning:tab>
+                        <!--pagination-->
+               <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                                <lightning:icon iconName="utility:close" alternativeText="Approved" variant="error"/>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="header43" class="slds-text-heading--medium">View Details</h2>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--medium">
+                            <div>
+                                <table >
+                            	<tr>
+                            		<td>To</td>
+                                    <td>{! v.to1 }</td>
+                            	</tr>
+                            	<tr>
+                            		<td>From</td>
+                                    <td>{! v.from1 }</td>
+                            	</tr>
+                                <tr>
+                            		<td>BCC</td>
+                                    <td>{! v.bcc1 }</td>
+                            	</tr>
+                                <tr>
+                            		<td>CC</td>
+                                    <td>{! v.cc1 }</td>
+                            	</tr>
+                                <tr>
+                            		<td>Subject</td>
+                                    <td>{! v.subject1 }</td>
+                            	</tr>
+                                <tr>
+                            		<td>Body</td>
+                                    <td><lightning:formattedRichText value="{!v.body1}"/>
+                                    </td>
+                            	</tr> 
+                                <tr>
+                                    <td>Attachment</td>
+                                    <td><aura:if isTrue="{!v.attachment1}">
+                                        <aura:iteration items="{!v.atlist}" var="acc">
+                                            <a href="{!'/servlet/servlet.FileDownload?file='+acc.Id}">{!acc.Name}</a><br></br>
+                                        </aura:iteration>
+                                    </aura:if>
+                                    </td>
+                                </tr>
+                            </table>
+                            </div>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <div class="myTest" title="testTitle" style="display:none">      
+                                <div class="test2" >
+                                    <aura:if isTrue="{!v.to1 == null}">
+                                            <lightning:input name="To" label="To" value="{!v.from1}" aura:id="inputFromReply"/>
+                                        <aura:set attribute="else">
+                                            <lightning:input name="To" label="To" value="{!v.to1}" aura:id="inputToReply"/>
+    									</aura:set>
+                                    </aura:if>
+                                    <lightning:input name="Subject" value="{!v.subject1}" label="Subject" aura:id="inputSubjectReply" />
+                                    <lightning:inputRichText aura:id="inputBodyReply" value="{!v.body1}">
+                                    	<lightning:insertImageButton/>
+                                    </lightning:inputRichText>
+                                    <lightning:fileUpload  name="fileUploader"
+                                       label= "Upload Image"
+                                       multiple="{!v.multiple}"
+                                       accept="{!v.accept}"
+                                       disabled="{!v.disabled}"
+                                       recordId="{!v.rowId}"
+                                       onuploadfinished="{! c.handleUploadFinishedReply }"/>
+                             <aura:if isTrue="{!v.isCheckSizeFileReply}">
+                            <ui:message title="Error" severity="error" closable="true">
+                                    Not upload file greater than 3MB check file again !
+                            </ui:message>
+                            </aura:if>
+                            <aura:if isTrue="{!v.documentIdReply}">
+                                    <table  border="1">
+                                                <tr>
+                                                    <td>No.</td>
+                                                    <td>Title</td>
+                                                    <td>Option</td>
+                                                </tr>
+                                            <aura:iteration items="{!v.arrFileReply}" var="acc" indexVar="index">
+                                                <tr>
+                                                    <td>{!index+1}</td>
+                                                    <td><a href="{!'/sfc/servlet.shepherd/version/download/'+acc.Id}">{!acc.Title}</a></td>
+                                                    <td><button type="button" onclick="{! c.deleteFileReply }" id='{!acc.Id}'>Delete</button></td>
+                                                </tr>
+                                            </aura:iteration>
+                                    </table>
+                            </aura:if>
+                                    <lightning:button variant="brand" label="Send Email" title="Send Email" onclick="{! c.handleReply }"/>
+                                    <lightning:button aura:id="hide" label="Bỏ thư nháp " onclick="{!c.hide}"  iconPosition="left"/>
+                                </div>
+                            </div>
+                            <aura:if isTrue="{!v.truthy}">
+                                <aura:set attribute="else">
+                                    <lightning:button aura:id="show" label="Reply" onclick="{!c.show}" iconPosition="center"/>
+                                </aura:set>
+                            </aura:if> 
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-backdrop " aura:id="Modalbackdrop"></div>
+            </lightning:tabset>
+    </div>
+    
+</aura:component>

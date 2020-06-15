@@ -1,0 +1,305 @@
+<apex:page controller="AngularVFPageController" sidebar="false" showHeader="false" docType="html-5.0">
+<apex:form id="frm">
+<html ng-app="hello" lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.no-icons.min.css" rel="stylesheet"/>           
+            <link href="https://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css" rel="stylesheet"/>
+            <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"/>          
+            <style>
+                .input-mysize { width: 400px }
+                .search-query {
+                padding-left: 0px;
+                background-image: url('/img/setup/search-icon.png');
+                background-repeat: no-repeat;
+                background-position: right bottom;               
+                }                
+                
+            </style>
+        </head>
+        <!--- Javascript -->
+        <script type="text/javascript">
+        <!-- Name your application -->
+        var myapp = angular.module('hello', []);
+        var sortingOrder = 'name';
+        <!-- Define Controller  -->
+            var contrl=myapp.controller('ctrlRead', function ($scope, $filter) {
+                <!--- Initialize Scope Variables --->
+                $scope.sortingOrder = sortingOrder;
+                $scope.reverse = false;
+                $scope.filteredItems = [];
+                $scope.groupedItems = [];
+                $scope.itemsPerPage = 5;
+                $scope.pagedItems = [];
+                $scope.currentPage = 0;
+                $scope.items ={!lstAccount};
+                
+                var searchMatch = function (haystack, needle) {
+                    if (!needle) {
+                        return true;
+                    }
+                    return haystack.toLowerCase().indexOf(needle.toLowerCase()) !== -1;
+                };
+                
+                //Initialize the Search Filters 
+                $scope.search = function () {
+                    $scope.filteredItems = $filter('filter')($scope.items, function (item) {
+                        for (var attr in item) {
+                            if (searchMatch(item[attr], $scope.query))
+                                return true;
+                        }
+                        return false;
+                    });
+                    
+                     //Define Sorting Order
+                    if ($scope.sortingOrder !== '') {
+                        $scope.filteredItems = $filter('orderBy')($scope.filteredItems, $scope.sortingOrder, $scope.reverse);
+                    }
+                    $scope.currentPage = 0;
+                    
+                    // Group by pages
+                    $scope.groupToPages();
+                };
+                
+                // Calculate Total Number of Pages based on Records Queried 
+                $scope.groupToPages = function () {
+                    $scope.pagedItems = [];
+                    for (var i = 0; i < $scope.filteredItems.length; i++) {
+                        if (i % $scope.itemsPerPage === 0) {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)] = [$scope.filteredItems[i]];
+                        } else {
+                            $scope.pagedItems[Math.floor(i / $scope.itemsPerPage)].push($scope.filteredItems[i]);
+                        }
+                    }
+                };
+                
+                $scope.range = function (start, end) {
+                    var ret = [];
+                    if (!end) {
+                        end = start;
+                        start = 0;
+                    }
+                    for (var i = start; i < end; i++) {
+                        ret.push(i);
+                    }
+                    return ret;
+                };
+                
+                $scope.prevPage = function () {
+                    if ($scope.currentPage > 0) {
+                        $scope.currentPage--;
+                    }
+                };
+                
+                $scope.nextPage = function () {
+                    if ($scope.currentPage < $scope.pagedItems.length - 1) {
+                        $scope.currentPage++;
+                    }
+                };
+                $scope.setPage = function () {
+                    $scope.currentPage = this.n;
+                };
+                // functions have been describe process the data for display
+                $scope.search();
+                
+                // change sorting order
+                $scope.sort_by = function (newSortingOrder) {
+                    if ($scope.sortingOrder == newSortingOrder)
+                        $scope.reverse = !$scope.reverse;
+                    $scope.sortingOrder = newSortingOrder;
+                    
+                    // icon setup
+                    $('th i').each(function () {
+                        // icon reset
+                        $(this).removeClass().addClass('icon-sort');
+                    });
+                    if ($scope.reverse)
+                        $('th.' + new_sorting_order + ' i').removeClass().addClass('icon-chevron-up');
+                    else
+                        $('th.' + new_sorting_order + ' i').removeClass().addClass('icon-chevron-down');
+                };
+                
+            });
+        
+        contrl.$inject = ['$scope', '$filter'];
+        </script>
+        
+        <body>     
+            <!-- =========== Binding Controller to Body of Page ============= -->
+            <div ng-controller="ctrlRead">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <a class="brand" href="">Search and delete Account</a>                   
+                    </div>
+                </div>               
+                
+               <center>               
+                   <div class="input-append" style="width:800px; margin:0 auto;">
+                        <input type="text" ng-model="query" ng-change="search()" class="input-mysize  search-query" placeholder="Search Account"/>
+                    </div>
+                </center>
+                <br/>
+               
+                <span style="font-weight:bold;font-size:13px;font-style:italic;margin-left:5px;">Total {{items.length}} Account(s) found</span>
+                <div style="float:right;">
+                     <input type="button" value="Delete" id="btn" class="btn btn-warning" onclick="doSave();" style="margin-right:10px;height:28px;"/>
+                      <img id="loading" src="/img/loading.gif" style="visibility:hidden;"></img>
+                </div>
+                <table class="table table-bordered table-striped table-hover table-condensed" id="tbl">
+                    <thead>
+                        <tr>
+                            <th class="chk"><input type="Checkbox" onclick="selectAllCheckboxes(this,'inputId')" id="chkall"/></th>                            
+                            <th class="name">Name&nbsp;<a ng-click="sort_by('name')"><i class="icon-sort"></i></a></th>
+                            <th class="Phone">Account Number&nbsp;<a ng-click="sort_by('AccountNumber')"><i class="icon-sort"></i></a></th>
+                            <th class="Phone">Phone&nbsp;<a ng-click="sort_by('Phone')"><i class="icon-sort"></i></a></th>
+                            
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <td colspan="6">
+                            <div class="pagination pagination-large pull-left">
+                                <ul>
+                                    <li ng-class="{disabled: currentPage == 0}">
+                                        <a ng-click="prevPage()" onclick="uncheckCheck();">Prev</a>
+                                    </li>
+                                    <li ng-repeat="n in range(pagedItems.length)" ng-class="{active: n == currentPage}" ng-click="setPage()">
+                                        <a ng-bind="n + 1" onclick="uncheckCheck();">1</a>
+                                    </li>
+                                    <li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+                                        <a ng-click="nextPage()" onclick="uncheckCheck();">Next</a>
+                                    </li>
+                                </ul>                               
+                            </div>                           
+                        </td>
+                    </tfoot>
+                    <tbody>                   
+                        <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
+                        <td><input type="Checkbox" value="{{item.id}}" id="inputId" onclick="calcCounter(this);"/></td>                           
+                        <td>
+                            <a href="/{{item.id}}"  class="contactLink" >{{item.name}}</a>                             
+                        </td>
+                        <td>{{item.accnumber}}</td>
+                        <td>{{item.Phone}}</td>
+                        </tr>
+                    </tbody>
+                </table>               
+            </div>            
+            <apex:actionstatus id="actStatusId">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color:black;height:100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                        <img class="waitingImage" src="/img/loading32.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Saving...</span>
+                    </div>
+                </div>
+            </apex:facet>
+           </apex:actionstatus>            
+            <apex:actionFunction name="paraFunction" action="{!deleteRecord}" rerender="tbl" status="actStatusId" oncomplete="window.location.reload();">    
+                <apex:param id="aname" assignTo="{!RecordId}" name="interviewDate" value="" />
+            </apex:actionFunction>  
+            
+            <script type="text/javascript">             
+            <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"/>
+            <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"/>            
+            var $j=$.noConflict();        
+            </script> 
+               
+            <script type="text/javascript">              
+              var countbyJQuery=new Array();          
+              function calcCounter(chk){                        
+                  if(chk.checked){                 
+                      countbyJQuery.push(chk.value);             
+                  }
+                  else{
+                      countbyJQuery.pop(chk.value);                        
+                  }                        
+              }       
+             
+             var countbyJS=new Array();   
+              function selectAllCheckboxes(obj,receivedInputID){                            
+                var inputCheckBox = document.getElementsByTagName("input");                  
+                for(var i=0; i<inputCheckBox.length; i++){          
+                    if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                        inputCheckBox[i].checked = obj.checked;
+                        if(inputCheckBox[i].checked){                           
+                            countbyJS.push(inputCheckBox[i].value);                            
+                        } 
+                        else{
+                            countbyJS.pop(inputCheckBox[i].value);
+                        }                      
+                    }                 
+                }              
+            }  
+            
+             function doSave(){
+                  var json='';
+                  var statusElement = document.getElementById('loading');                  
+                  if(countbyJQuery.length>0){
+                      for(var i=0; i<countbyJQuery.length; i++){
+                          json=json+countbyJQuery[i]+'-';
+                      }                          
+                      //paraFunction(json.substring(0,json.length-1)); 
+                      if(confirm('Are you want do delete selected account ?')){ 
+                          statusElement.style.visibility='visible';                      
+                          deleteAccount(json.substring(0,json.length-1),function(statusElement){
+                              return function(data){
+                                  if(data){
+                                      statusElement.style.visibility='hidden'; 
+                                      alert('Selected account is successfully deleted');
+                                      window.location.reload();
+                                  }
+                              }
+                          }(statusElement));
+                      }                                            
+                 }
+                 else if(countbyJS.length>0){
+                     for(var i=0; i<countbyJS.length; i++){
+                          json=json+countbyJS[i]+'-';
+                      }                          
+                      //paraFunction(json.substring(0,json.length-1)); 
+                      if(confirm('Are you want do delete selected account ?')){  
+                          statusElement.style.visibility='visible';                     
+                          deleteAccount(json.substring(0,json.length-1),function(statusElement){
+                              return function(data){
+                                  if(data){
+                                      statusElement.style.visibility='hidden'; 
+                                      alert('Selected account is successfully deleted');
+                                      window.location.reload();
+                                  }
+                              }
+                          }(statusElement));
+                      }                             
+                 } 
+                 else{
+                     statusElement.style.visibility='hidden'; 
+                     alert('Please select at least on record')
+                 }            
+            }
+                        
+            var deleteAccount=function(jsonData,callback){    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.AngularVFPageController.getRecord}',jsonData,function(result, event){                    
+                    if(event.status){                     
+                        if(result){
+                            callback(result);                            
+                        }                              
+                    } 
+                    else if (event.type === 'exception'){                        
+                        alert(event.message);
+                        window.location.reload();
+                    }
+                    },{
+                        escape: false
+                    });      
+            }
+                         
+            function uncheckCheck(){            
+                var chk=document.getElementById('chkall').checked;
+                if(chk){
+                    document.getElementById('chkall').checked=false;
+                }           
+            }       
+           </script>
+        </body>
+    </html>
+   </apex:form>
+
+</apex:page>

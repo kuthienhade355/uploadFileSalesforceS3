@@ -1,0 +1,110 @@
+<apex:page showHeader="true" sidebar="true">
+	<html>
+	<head>
+		<title></title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+		<script type="text/javascript">
+			var app = angular.module('myApp',[]);
+			app.controller('body',function($scope){
+				$scope.username = '';
+				$scope.password = '';
+				$scope.confirmSubmit = function(){
+				}
+			})
+		</script>
+		<apex:slds />
+	</head>
+	<body>
+
+
+
+		<!-- footer -->
+		<div style="height: 180px;">
+			<div class="slds-form-element">
+				<div style="height: 14rem;">
+				  <div class="slds-form-element">
+				    <label class="slds-form-element__label" for="combobox-unique-id-28">Search</label>
+				    <div class="slds-form-element__control">
+				      <div class="slds-combobox_container slds-size_small">
+				        <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+				          <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+				            <input class="slds-input slds-combobox__input slds-combobox__input-value" id="combobox-unique-id-28" aria-controls="listbox-unique-id" autocomplete="off" role="textbox" type="text" placeholder="Select an Option" readonly="" value="Function A"
+				            />
+				            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+				              <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+				                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down" />
+				              </svg>
+				              <span class="slds-assistive-text">Description of icon when needed</span>
+				            </span>
+				          </div>
+				          <div id="listbox-unique-id" role="listbox">
+				            <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+				              <li role="presentation" class="slds-listbox__item">
+				                <div id="listbox-option-unique-id-01" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center slds-is-selected" role="option">
+				                  <span class="slds-media__figure">
+				                    <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+				                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check" />
+				                    </svg>
+				                  </span>
+				                  <span class="slds-media__body">
+				                    <span class="slds-truncate" title="Option A">
+				                      <span class="slds-assistive-text">Current Selection:</span> Option A</span>
+				                  </span>
+				                </div>
+				              </li>
+				              <li role="presentation" class="slds-listbox__item">
+				                <div id="listbox-option-unique-id-02" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center slds-is-selected" role="option">
+				                  <span class="slds-media__figure">
+				                    <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+				                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check" />
+				                    </svg>
+				                  </span>
+				                  <span class="slds-media__body">
+				                    <span class="slds-truncate" title="Option B">
+				                      <span class="slds-assistive-text">Current Selection:</span> Option B</span>
+				                  </span>
+				                </div>
+				              </li>
+				              <li role="presentation" class="slds-listbox__item">
+				                <div id="listbox-option-unique-id-03" class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small slds-media_center" role="option">
+				                  <span class="slds-media__figure">
+				                    <svg class="slds-icon slds-icon_x-small slds-listbox__icon-selected" aria-hidden="true">
+				                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check" />
+				                    </svg>
+				                  </span>
+				                  <span class="slds-media__body">
+				                    <span class="slds-truncate" title="Option ABCDEFGHIJKLMNOPQRSTUVWXYZ"> Option ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+				                  </span>
+				                </div>
+				              </li>
+				            </ul>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+			  <span class="slds-form-element__label" id="file-selector-primary-label">UploadImage</span>
+			  <div class="slds-form-element__control">
+			    <div class="slds-file-selector slds-file-selector_files">
+			      <div class="slds-file-selector__dropzone">
+			        <input class="slds-file-selector__input slds-assistive-text" accept="image/png" type="file" id="file-upload-input-01" aria-labelledby="file-selector-primary-label file-selector-secondary-label" />
+			        <label class="slds-file-selector__body" for="file-upload-input-01" id="file-selector-secondary-label">
+			          <span class="slds-file-selector__button slds-button slds-button_neutral">
+			            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+			              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#upload" />
+			            </svg>Upload Files</span>
+			          <span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+			        </label>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		  <div class="slds-docked-form-footer">
+		    <button type="button" class="slds-button slds-button_neutral">Cancel</button>
+		    <button type="button" class="slds-button slds-button_brand">Save</button>
+		  </div>
+		</div>
+	</body>
+	</html>
+</apex:page>

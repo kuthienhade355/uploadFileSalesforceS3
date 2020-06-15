@@ -1,0 +1,37 @@
+<aura:component >
+        <aura:registerEvent name="addItem" type="c:addItemEvent"/>
+	    <div aria-labelledby="newexpenseform">
+        <!-- BOXED AREA -->
+        <fieldset class="slds-box slds-theme--default slds-container--small">
+        <legend id="newexpenseform" class="slds-text-heading--small 
+          slds-p-vertical--medium">
+          Add ITEMS
+        </legend>
+    	<!-- CREATE NEW ITEMS FORM -->
+        <form class="slds-form--stacked">          
+            <lightning:input aura:id="itemsform" label="Name"
+                             name="Name"
+                             value="{!v.newItem.Name}"
+                             required="true"/> 
+            <lightning:input type="number" aura:id="itemsform" label="Quantity"
+                             name="Quantity"
+                             min="1"
+                             step="1"
+                             value="{!v.newItem.Quantity__c}"
+                              messageWhenRangeUnderflow="Enter the quantity atleast 1"/>
+            <lightning:input type="number" aura:id="itemsform" label="Price"
+                             name="Price"
+                             formatter="currency"
+                             value="{!v.newItem.Price__c}"/>
+            <lightning:input type="checkbox" aura:id="itemsform" label="Packed"  
+                             name="Packed"
+                             checked="{!v.newItem.Packed__c}"/>
+            <lightning:button label="Create Item" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.clickCreateItem}"/>
+        </form>
+        <!-- / CREATE NEW ITEMS FORM -->
+        </fieldset>
+    </div>
+</aura:component>

@@ -1,0 +1,11 @@
+<template>
+    <div if:true={item}>
+        <lightning-record-form
+            record-id={item}
+            object-api-name="Account"
+            layout-type="Compact"
+            columns="1"
+            mode="readonly">
+        </lightning-record-form>
+    </div>
+</template>

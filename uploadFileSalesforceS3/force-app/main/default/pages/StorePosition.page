@@ -1,0 +1,584 @@
+<apex:page cache="false" showHeader="false" sidebar="true" controller="RegisterPageCC" action="{!init}">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+	<head>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js"></script>
+		
+		<title>Experience</title>
+		<apex:slds />
+		<style type="text/css">
+		.wrapper-col{
+			padding: 10px;
+		}
+		.slds-scope .slds-dropdown__item>a:focus{
+			background-color: rgb(210, 0, 0)
+		}
+		.slds-scope .slds-dropdown__item>a:hover{
+    		background-color: #34becd;
+		}
+		.wrapper-silder-right{
+			padding:10px;
+		}
+		.slds-scope .slds-dropdown{
+			width: 20rem;
+			margin-top:0;
+		}
+		a{
+			color: white;
+		}
+		strong{
+			color: #c3a200;
+		}
+		.container-col{
+			padding-bottom: 50px;
+		}
+		a.slds-th__action.slds-text-link_reset.wrapper-button {
+    		background: white;
+    		border: 1px solid;
+		}
+		a.slds-th__action.slds-text-link_reset.wrapper-button:hover {
+		    background: #a2c8d4;
+		}
+		.slds-scope .slds-border_top, .slds-scope .slds-border--top {
+		    border-top: 1px solid white;
+		}
+		.slds-scope .slds-th__action {
+			height: 3.5rem;
+		}
+		.slds-scope .slds-text-heading_small, .slds-scope .slds-text-heading--small {
+			padding-bottom: 2px;
+		    font-size: 1.068rem;
+		    line-height: 2rem;
+		    font-family: sans-serif;
+		    font-weight: 700;
+		}
+		.slds-scope .slds-dropdown{
+			padding: 0;
+		}
+		.slds-scope .slds-dropdown__item>a {
+		    /*min-height: 3.5rem;*/
+		    font-size: 1.125rem;
+    		font-weight: 500;
+    		color: white;
+		}
+		p{
+			font-size: 1rem;
+			font-family: sans-serif;
+		}
+		ul.slds-dropdown__list.background-menu{
+			background-color: rgba(112, 110, 107, 0.8);
+		}
+		a.active.background-title {
+			height: 70px;
+   			background-color: rgb(210, 0, 0)
+		}
+		.fa, .fas {
+    		font-size: 1.125rem;
+		}
+		.slds-border_top.title {
+		    border-top: 1px solid;
+		    font-size: -webkit-xxx-large;
+		    font-family: -webkit-body;
+		}
+		.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		min-width: 24vw;
+		}
+		@media screen and (max-width: 1280px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+	    		width: 23vw;
+			}
+		}
+		@media screen and (max-width: 767px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		min-width: 47.5vw;
+			}
+			.container-col {
+    		padding-bottom: 20px;
+			}
+		}
+		@media screen and (max-width: 687px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		min-width: 47vw;
+			}
+		}
+		@media screen and (max-width: 520px) {
+	      	p{
+	      		font-size: 0.8rem;
+	      	}
+		}
+		@media screen and (max-width: 479px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		    min-width: 92vw;
+			}
+		}
+		@media screen and (max-width: 320px) {
+	      	.slds-scope .slds-dropdown-trigger_click .slds-dropdown, .slds-scope .slds-dropdown-trigger_click:hover .slds-dropdown, .slds-scope .slds-dropdown-trigger--click .slds-dropdown, .slds-scope .slds-dropdown-trigger--click:hover .slds-dropdown {
+    		    min-width: 81.5vw;
+			}
+		}
+	</style>
+	</head>
+	
+	<body ng-app='myApp' ng-controller='body'>
+
+		<!-- popup -->
+		<div ng-show="viewCreate === 'open'" class="ng-hide">
+          <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" ng-click="showDeail()">
+                  <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                     <use xlink:href="{!URLFOR($Resource.SLDS274, 'icons/action-sprite/svg/symbols.svg#close')}"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">Position Canditate</h2>
+              </header>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                <!-- content -->
+              <!--   Last Name<br/><input type="text" name="LastName" ng-model='LastName1'/>
+                <br/>
+                First Name<br/><input type="text" name="FirstName" ng-model='FirstName1'/>
+                <br/>
+                City<br/><input type="text" name="City" ng-model='City1'/>
+                <br/>
+                Email<br/><input type="text" name="Email" ng-model='Email1'/>
+                <br/>
+                Phone<br/><input type="text" name="Phone" ng-model='Phone1'/>
+                <br/>   
+                Status<br/><input type="checkbox" name="Status" ng-model='Status1'/> -->
+                            <table>
+                            	<tr>
+                            		<td>Last Name</td><td><input type="text" name="LastName" ng-model='LastName1' style="margin:5px" readonly="true"/></td>
+                                     <td>First Name</td><td><input type="text" name="FirstName" ng-model='FirstName1' style="margin:5px" readonly="true"/>
+                                    </td>
+                            	</tr>
+                            	<tr>
+                            		<td>City</td><td><input type="text" name="City" ng-model='City1' style="margin:5px" readonly="true"/></td>
+                                     <td>Email</td><td><input type="text" name="Email" ng-model='Email1' style="margin:5px" readonly="true"/>
+                                    </td>
+                            	</tr>
+                            	<tr>
+                            		<td>Phone</td><td><input type="text" name="Phone" ng-model='Phone1' style="margin:5px" readonly="true"/></td>
+                                     <td>Status</td><td><input type="checkbox" name="Status" ng-model='Status1' style="margin:5px" readonly="true"/>
+                                    </td>
+                            	</tr>
+                                <tr>
+                                    <td>Duration</td><td><input type="text" style="margin:5px" ng-model='duration' required="true"/></td>
+                                     <td>Company</td><td><input type="text" ng-model='company' style="margin:5px"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Salary</td>
+                                    <td><input type="text" style="margin:5px" min="1" ng-model='salary' required="true"/></td>
+                                    <td>Location</td><td><input type="text" style="margin:5px" ng-model='location' required="true"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Job Description</td>
+                                    <td><textarea class="wrapperDescription" ng-model='jobDescription' style="margin:5px;width: 130%;"/></td>
+                                </tr>
+                            </table>
+              </div>
+              <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" ng-click="showDeail()">Cancel</button>
+                <button class="slds-button  slds-button_brand" ng-click="saveEditPosition()">Save</button>
+              </footer>
+            </div>
+          </section>
+           <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+
+
+        <!-- pop waiting -->
+        <div ng-show="waitingDetail === 'open'" class="ng-hide">
+          <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" ng-click="awatingDetail()">
+                  <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                     <use xlink:href="{!URLFOR($Resource.SLDS274, 'icons/action-sprite/svg/symbols.svg#close')}"></use>
+                  </svg>
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">Position Canditate</h2>
+              </header>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                <!-- content -->
+              <!--   Last Name<br/><input type="text" name="LastName" ng-model='LastName1'/>
+                <br/>
+                First Name<br/><input type="text" name="FirstName" ng-model='FirstName1'/>
+                <br/>
+                City<br/><input type="text" name="City" ng-model='City1'/>
+                <br/>
+                Email<br/><input type="text" name="Email" ng-model='Email1'/>
+                <br/>
+                Phone<br/><input type="text" name="Phone" ng-model='Phone1'/>
+                <br/>   
+                Status<br/><input type="checkbox" name="Status" ng-model='Status1'/> -->
+                            <table>
+                            	<tr>
+                            		<td>Last Name :</td><td>{{result.Store_Candidate__r.Last_Name__c}}</td>
+                                     <td>First Name :</td><td>{{result.Store_Candidate__r.First_Name__c}}
+                                    </td>
+                            	</tr>
+                            	<tr>
+                            		<td>City :</td><td>{{result.Store_Candidate__r.City__c}}</td>
+                                     <td>Email :</td><td>{{result.Store_Candidate__r.Email__c}}
+                                    </td>
+                            	</tr>
+                            	<tr>
+                            		<td>Phone:</td><td>{{result.Store_Candidate__r.Phone__c}}</td>
+                                     <td>Status</td><td><input type="checkbox" name="Status" ng-model='Status2' style="margin:5px" readonly="true"/>
+                                    </td>
+                            	</tr>
+                                <tr>
+                                    <td>Duration :</td><td>{{result.Store_Position__r.Duration__c}}</td>
+                                     <td>Company :</td><td>{{result.Store_Position__r.Company__c}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Salary : </td>
+                                    <td>{{result.Store_Position__r.Salary__c}}</td>
+                                    <td>Location : </td><td>{{result.Store_Position__r.Location__c}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Job Description : </td>
+                                    <td>{{result.Store_Position__r.Job_Description__c}}</td>
+                                </tr>
+                            </table>
+              </div>
+              <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" ng-click="awatingDetail()">Cancel</button>
+                <!-- <button class="slds-button  slds-button_brand" ng-click="saveEditPosition()">Save</button> -->
+              </footer>
+            </div>
+          </section>
+           <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+
+
+		<div class="slds-grid slds-wrap">
+		  <!-- table-1 -->
+		  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_3-of-4 wrapper-col"  ng-controller='experience'>
+		  		<div class="slds-border_top">
+		  			<div class="slds-page-header">
+					  <div class="slds-page-header__row">
+					    <div class="slds-page-header__col-title">
+					      <div class="slds-media">
+					        <div class="slds-media__figure">
+					          <span class="slds-icon_container slds-icon-standard-opportunity" title="opportunity">
+					            <span class="slds-assistive-text">opportunity</span>
+					          </span>
+					        </div>
+					        <div class="slds-media__body">
+					          <div class="slds-page-header__name">
+					            <div class="slds-page-header__name-title">
+					              <h1>
+					                <span class="slds-page-header__title slds-truncate" title="Experience">Store Position</span>
+					              </h1>
+					            </div>
+					          </div>
+					          <p class="slds-page-header__name-meta"></p>
+					        </div>
+					        <!-- <div class="slds-grid">
+			                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+			                      <button class="slds-button slds-button_neutral" ng-click='showDeail()'>New Candidate</button>
+			                    </div>
+			                </div> -->
+					      </div>
+					    </div>
+					  </div>
+					</div>
+					<div ng-repeat='e in experience'>
+						<div class="slds-text-heading_large">
+							<div ng-bind-html="e.Name__c"></div>
+						</div>
+						<div ng-bind-html='trustAsHtml(e.Description__c)'></div>				
+					</div>
+
+			<!-- table 2 -->
+			<br/>
+			<br/>
+			<table class="slds-table slds-table_cell-buffer slds-table_bordered">
+			<thead>
+				<tr class="slds-line-height_reset">
+					<th class="" scope="col">
+					<div class="slds-truncate" title="LastName">Last Name</div>
+					</th>
+					<th class="" scope="col">
+					<div class="slds-truncate" title="FirstName">First Name</div>
+					</th>
+					<th class="" scope="col">
+					<div class="slds-truncate" title="City">City</div>
+					</th>
+					<th class="" scope="Info">
+					<div class="slds-truncate" title="Info">Info</div>
+					</th>
+					<th class="" scope="Email">
+					<div class="slds-truncate" title="Email">Email</div>
+					</th>
+					<th class="" scope="Phone">
+					<div class="slds-truncate" title="Phone">Phone</div>
+					</th>
+					<th class="" scope="col">
+					<div class="slds-truncate" title="Status">Status</div>
+					</th>
+					<th class="" scope="col">
+					<div class="slds-truncate" title="Status">Approval Status</div>
+					</th>
+					<th class="" scope="col">
+					<div class="slds-truncate" title="Position">Position</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="slds-hint-parent" ng-repeat='store in storeCandidate' ng-show='store.Status__c && !store.Approval_Status__c'>
+					<td data-label="LastName">
+					<div class="slds-truncate" title="LastName">{{store.Last_Name__c}}</div>
+					</td>
+					<td data-label="FirstName">
+					<div class="slds-truncate" title="FirstName">{{store.First_Name__c}}</div>
+					</td>
+					<td data-label="City">
+					<div class="slds-truncate" title="City">{{store.City__c}}</div>
+					</td>
+					<td data-label="Info">
+					<div class="slds-truncate" ng-repeat='attachment in store.Attachments.records'>
+ 						<a href="https://resourceful-moose-487666-dev-ed--c.ap4.visual.force.com/servlet/servlet.FileDownload?file={{attachment.Id}}">CV</a>
+					</div>
+					</td>
+					<td data-label="Email">
+					<div class="slds-truncate" title="Info">{{store.Email__c}}</div>
+					</td>
+					<td data-label="Phoe">
+					<div class="slds-truncate" title="Info">{{store.Phone__c}}</div>
+					</td>
+					<td data-label="Status">
+					<div>
+						<input type="checkbox" value="{{store.Status__c}}" ng-checked="store.Status__c"/>
+					</div>
+					</td>
+					<td data-label="Status">
+					<div>
+						<input type="checkbox" value="{{store.Approval__Status__c}}" ng-checked="store.Approval__Status__c"/>
+					</div>
+					</td>
+					<td data-label="Position">
+					<button class="slds-button  slds-button_brand" ng-click="showDeail(store.Id,store.First_Name__c,store.Last_Name__c,store.City__c,store.Phone__c,store.Email__c,store.Status__c)" ng-show="!store.PositionStatus__c">Build</button>
+					<button class="slds-button  slds-button_brand" ng-show="store.PositionStatus__c" ng-click="awatingDetail(store.Id)">Awaiting</button>
+					</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<!-- footer -->
+			<div style="height: 180px;">
+			  <div class="slds-docked-form-footer">
+			    <button type="button" class="slds-button slds-button_brand" onclick="window.location.href = 'https://resourceful-moose-487666-dev-ed--c.ap4.visual.force.com/apex/RegisterPage'">Back</button>
+			  </div>
+			</div>
+		  		</div>		  				  		
+		  </div>
+		  <!-- table-2 -->
+		  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-4" >
+		  	<div class="wrapper-silder-right">
+			  	<div class="slds-grid slds-grid_vertical">
+			  		<!-- infoEmployee --> 
+			  		<div class="slds-col container-col" >
+			  			<div class="wrapper-col" style="background: rgba(169, 169, 169, 0.2)">
+				  			<div class="slds-text-heading_small">{{NameUser}}</div>
+				  			<p>Roles: <strong>{{Role}}</strong></p>
+				  			<br/>
+				  			<p>Company : {{Company}}</p>
+				  			<br/>
+				  			<p>Phone : {{Phone}}</p>
+				  			<!-- <p>Expried Date : {{ExpiredDate}}</p> -->
+				  			<br/>
+				  			<p style="font-family: unset;">MemberId:</p>
+				  			<p>{{MemberId}}</p>
+				  			<br/>
+				  			<p>Email:</p>
+				  			<p>{{Email}}</p>
+				  			<br/>
+							<a class="slds-th__action slds-text-link_reset wrapper-button" ng-click="formLogOut()">
+								<div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+					            	<span class="slds-truncate slds-text-heading_small " title="Logout" style="color: #224c71;">Logout</span>
+					          	</div>
+								<span><i class="fas fa-unlock"/></span>
+							</a>
+
+
+					       <!--  <apex:form >
+							
+									<apex:commandButton styleClass="slds-th__action slds-text-link_reset wrapper-button" action="{!getLogOut}" value="Logout"/>
+			
+							</apex:form> -->
+				  		</div>
+			  		</div>
+			  		<!-- Menu function -->
+			  		<div class="slds-col" ng-controller='function'>
+			  			<div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" >
+						  <div class="slds-dropdown slds-dropdown_left slds-dynamic-menu">
+						    <ul class="slds-dropdown__list" role="menu" aria-label="Show More" ng-repeat = 'e in functions' ng-show="!e.ParentID__c && e.Active__c">
+						      <li class="slds-dropdown__item" role="presentation">
+						        <a role="menuitem" tabindex="0" class="active background-title" ng-click="changeSection('open')" >
+						          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+					            	<span class="slds-truncate" title="Function A">{{e.Title__c}}</span>
+						          	</div>
+									<span><i class="fas fa-sort-down"/></span>
+						        </a>
+						        <div class="slds-dropdown slds-dropdown_submenu slds-dropdown_submenu-left slds-dynamic-menu" ng-show="section === 'open'" style="border-top: 10px solid white;">
+						          <ul class="slds-dropdown__list background-menu" role="menu" aria-label="Menu Item One" ng-repeat = 'e in functions' ng-show="e.ParentID__c  && e.Active__c">
+						            <li class="slds-dropdown__item slds-border_top" role="presentation">
+						              <a href="javascript:void(0);" role="menuitem" tabindex="0">
+						                <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+						            		<span class="slds-truncate" title="Function B" style="font-weight: 200;">{{e.Title__c}}</span>
+							          	</div>
+										<span><i class="fas fa-chevron-right" style="font-size: 0.8rem;"></i></span>
+						              </a>
+						            </li>
+						          </ul>
+						        </div>
+						      </li>
+						    </ul>
+						  </div>
+						</div>
+			  		</div>
+			  	</div>
+		  	</div>
+		  </div>
+		</div>
+	</body>
+	<script type="text/javascript">
+			var app = angular.module('myApp',['ngSanitize']);
+			app.factory('listContactFactory' , function($q, $rootScope){
+                    const factory = {}; 
+            factory.callRemoteActionWithParameter = function(remoteAction, numberId){
+                    var deferred = $q.defer();  
+                    Visualforce.remoting.Manager.invokeAction(remoteAction, numberId, function(result){  
+                      $rootScope.$apply(function(){  
+                        deferred.resolve(result);
+                      });  
+                    }, {escape: false});
+                    return deferred.promise;  
+                }
+                return factory;
+            });
+			app.controller('body' ,function($scope,listContactFactory){
+				var buttonSection  = 'open';
+				$scope.viewCreate = 'close';
+				$scope.waitingDetail = 'close';
+				$scope.candidatePositions = function(result){
+					$scope.result = result;
+					console.log('resultresult',$scope.result);
+					$scope.Status2 = result.Store_Candidate__r.Status__c;
+				}
+				$scope.awatingDetail = function(id){
+					$scope.id = id;
+					if(id){
+						// Visualforce.remoting.Manager.invokeAction(
+	     //                    '{!$RemoteAction.RegisterPageCC.showDetailDocument}',
+	     //                    $scope.id, 
+	     //                    function(result, event){
+	     //                        if(result==null){
+	     //                            window.location.reload();
+	     //                        }
+	     //                        $scope.candidatePositions(result);
+	     //                        console.log('result',result.Store_Candidate__r)
+	     //                    }, 
+	     //                    {escape: true}
+	     //                );
+	     				listContactFactory.callRemoteActionWithParameter('{!$RemoteAction.RegisterPageCC.showDetailDocument}',$scope.id).then(function(result){
+                        	$scope.candidatePositions(result);
+                    	});
+					}
+					console.log('result121',$scope.result);
+                    if($scope.waitingDetail === 'open'){
+                        $scope.waitingDetail = 'close';    
+                    }else{
+                        $scope.waitingDetail = 'open';
+                    }
+                }
+
+				$scope.formLogOut = function(){
+					var delete_cookie = function(name) {
+						document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+						};
+					delete_cookie('apex__urlId');
+				    window.location = '/apex/loginHRManager';
+				}
+				$scope.showDeail = function(id,FirstName,LastName,City,Phone,Email,Status){
+					$scope.id = id;
+					$scope.FirstName1 = FirstName;
+                    $scope.LastName1 = LastName;
+                    $scope.Email1 = Email;
+                    $scope.Phone1 = Phone;
+                    $scope.City1 = City;
+                    $scope.Status1 = Status;
+                    if($scope.viewCreate === 'open'){
+                        $scope.viewCreate = 'close';    
+                    }else{
+                        $scope.viewCreate = 'open';
+                    }
+                }
+               // $scope.duration ='';
+               //  $scope.company ='';
+               //   $scope.salary ='';
+               //    $scope.location = '';
+               //    $scope.jobDescription ='';
+               //    console.log('$scope.company',$scope.company);
+                $scope.saveEditPosition = function(){
+                    Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.RegisterPageCC.saveEditPosition}',
+                        $scope.id,$scope.duration, $scope.company, $scope.salary, $scope.location,$scope.jobDescription, 
+                        function(result, event){
+                            if(result==null){
+                                window.location.reload();
+                            }
+                        }, 
+                        {escape: true}
+                    );
+                }
+
+				$scope.openSection =function(name){
+    				if($scope.buttonSection === name){
+    				   $scope.buttonSection = 'close';
+    				}else{
+    					$scope.buttonSection ='open';
+    				}
+    			}
+				$scope.NameUser = '{!register.First_Name__c}'+' '+'{!register.Last_Name__c}';
+				$scope.Role = '{!register.Title_Job__c}';
+				$scope.MemberId = '{!register.id}';
+				$scope.Email ='{!register.Email__c}';
+				$scope.Company ='{!register.Company__c}';
+				$scope.Phone ='{!register.Phone__c}';
+			})
+			.controller('experience',function($scope,$sce){
+				$scope.experience = JSON.parse('{!Experience1}');
+				$scope.trustAsHtml = function(string) {
+				    return $sce.trustAsHtml(string);
+				};
+				$scope.storeCandidate = JSON.parse('{!StoreCandidate}');
+				console.log('$scope.storeCandidate',$scope.storeCandidate);
+			})
+			.controller('function',function($scope){
+				var section = 'open';
+				var functionJSON = JSON.parse('{!Functions}');
+				$scope.functions = functionJSON;
+				$scope.changeSection =function(name){
+    				if($scope.section === name){
+    				   $scope.section = 'close';
+    				}else{
+    					$scope.section ='open';
+    				}
+    			}
+			})
+
+		</script>
+	</html>
+</apex:page>

@@ -1,0 +1,10 @@
+.THIS .selected{
+    color:orange;
+}
+.THIS .slds-modal__footer{
+    text-align: left;
+}
+.THIS .myCheckbox{
+  display: inline-block;
+  float: left;
+}

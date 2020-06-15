@@ -1,0 +1,49 @@
+<apex:page showHeader="true" sidebar="true">
+	<head>
+		<title>Send Mail</title>
+		<script type="text/javascript"></script>
+		<style type="text/css"></style>
+	</head>
+	<body>
+		<form>
+			<table>
+				<tr>
+					<td>To</td>
+					<td><input id="To" type="Text" name="To"/></td>
+					<td>CC</td>
+					<td><input id="CC" type="Text" name="CC"/></td>
+				</tr>
+				<tr>
+					<td>BBC</td>
+					<td><input id="BBC" type="Text" name="BBC"/></td>
+					<td>Subject</td>
+					<td><input id="Subject" type="Text" name="Subject"/></td>
+				</tr>
+				<tr>
+					<td>Body</td>
+					<td><textarea id="Body" name="Body"></textarea></td>
+				</tr>
+				<tr>
+					<td>Upload</td>
+					<td><input id="Upload" type="file" name="Upload"/></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><button id="myButton" type="submit">SendEmail</button></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+	<script type="text/javascript">
+		var To = document.getElementById("To");
+		var CC = document.getElementById("CC");
+		var BBC = document.getElementById("BBC");
+		var Subject = document.getElementById("Subject");
+		var Body = document.getElementById("Body");
+		var Upload = document.getElementById("Upload");
+
+		document.getElementById("myButton").addEventListener("click", function() {
+		    alert('To :' + To.value +'CC : ' +CC.value + 'BBC : ' +BBC.value + 'Subject'+ Subject.value + 'Body' + Body.value + 'Upload' +Upload.value);
+		});
+	</script>
+</apex:page>

@@ -1,0 +1,82 @@
+<apex:page standardController="Account" extensions="BillResultInputControllerTest" action="{!initAction}">
+     <!-- Test -->
+    <apex:form id="Quan">
+        <script type="text/javascript">
+            window.sfdcPage.appendToOnloadQueue(function() { selectHeaderCheckboxes("inputId", "headerInputId") });
+    
+            function selectAllCheckboxes(obj, txtId){
+                var inputCheckBox = document.getElementsByTagName("input");
+                for(var i=0; i<inputCheckBox.length; i++){
+                    if(inputCheckBox[i].id.indexOf(txtId)!=-1){
+                        if(inputCheckBox[i].disabled  == true){
+                            continue;
+                        }
+                        inputCheckBox[i].checked = obj.checked;
+                    }
+                }
+            }
+    
+            function selectHeaderCheckboxes(txtId, txtAllId){
+                var allCheck = true;
+                var inputCheckBox = document.getElementsByTagName("input");
+                for(var i=0; i<inputCheckBox.length; i++){
+                    if(inputCheckBox[i].id.indexOf(txtId)!=-1){
+                        if(inputCheckBox[i].disabled  == true){
+                            continue;
+                        }
+                        if(inputCheckBox[i].checked == false){
+                            allCheck = false;
+                            break;
+                        }
+                    }
+                }
+                document.getElementById("{!$Component.Quan.block.blockTable}:" + txtAllId).checked = allCheck;
+            }
+        </script>
+    <apex:outputPanel >
+    <apex:pageBlock title="Deposit Result" id="block">
+            <apex:pageBlockTable value="{!leads}" var="o" id="blockTable">
+            <apex:column width="4%">
+                <apex:facet name="header">
+                    <apex:outputPanel layout="block"  style="text-align:center;">
+                        <div align="center">
+                            <apex:inputCheckbox id="headerInputId" onclick="selectAllCheckboxes(this, 'inputId')">
+                            </apex:inputCheckbox>
+                            <apex:outputLabel value="消込" for="headerInputId" style="background: #f2f3f3;
+                            border-width: 0 0 1px 1px;
+                            border-color: #e0e3e5;
+                            color: #000;
+                            font-size: 1.6em;
+                            font-weight: bold;
+                            padding: 5px 2px 4px 5px;"/>   
+                        </div>
+                    </apex:outputPanel>
+                </apex:facet>
+                <apex:inputCheckbox value="{!o.selected}" id="inputId" onclick="selectHeaderCheckboxes('inputId' ,'headerInputId');">
+                </apex:inputCheckbox>
+            </apex:column>
+            <apex:column value="{!o.acc.Name}"/>
+            <apex:column value="{!o.acc.BillingState}"/>
+            </apex:pageBlockTable>
+            <apex:outputLabel >Total no of recs:{!tot}</apex:outputLabel>
+
+            <!-- Pagination -->
+            <div align="center">
+            <apex:commandButton value="First Page" action="{!Firstbtn}" disabled="{!prv}" reRender="Quan"/>
+            <apex:commandButton value="PreviousPage" action="{!prvbtn}" disabled="{!prv}" reRender="Quan"/>
+            <apex:commandButton value="NextPage" action="{!Nxtbtn}" disabled="{!nxt}"  reRender="Quan"/>
+            <apex:commandButton value="LastPage" action="{!lstbtn}" disabled="{!nxt}" reRender="Quan"/>
+            </div>
+            Display records per page <apex:selectList value="{!rec}" size="1" >
+            <apex:selectOption itemLabel="None" itemValue="5" ></apex:selectOption>
+            <apex:selectOption itemLabel="1" itemValue="1" ></apex:selectOption>
+            <apex:selectOption itemLabel="2" itemValue="2"></apex:selectOption>
+            <apex:selectOption itemLabel="5" itemValue="5"></apex:selectOption>
+            <apex:selectOption itemLabel="10" itemValue="10"></apex:selectOption>
+            <apex:actionSupport event="onchange" reRender="Quan" action="{!updatePage}"/>
+            </apex:selectList><br/>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+    <!-- end  -->
+</apex:page>

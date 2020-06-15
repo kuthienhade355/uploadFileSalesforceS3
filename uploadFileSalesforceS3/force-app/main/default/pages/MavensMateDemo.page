@@ -1,0 +1,26 @@
+<apex:page showHeader="false" applyHtmlTag="false" docType="html-5.0" controller="STM_StadiumCC">
+	<html>
+	<head>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+		<script>
+			var App = angular.module('myApp',[]),
+			App.controller('myctrl',function ($scope){
+				$scope.stadiums = {!stadiums}
+			});
+		</script>
+		<title>Tran Minh Quan</title>
+	</head>
+	<body ng-app='myApp' class='container' ng-controller='mystrl'>
+		<table class="table table-bordered">
+			<tr>
+				<th>Name</th>
+				<th>Id</th>
+			</tr>
+		</table>
+		<tr ng-repeat='stadium in stadiums | filter:query'>
+			<td>{{stadium.Name}}</td>
+			<td>{{stadium.Id}}</td>
+		</tr>
+	</body>
+	</html>
+</apex:page>

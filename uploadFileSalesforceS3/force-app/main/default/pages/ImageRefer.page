@@ -1,0 +1,42 @@
+<apex:page showHeader="false" sidebar="true" docType="html-5.0">
+<html lang="en">
+<head>
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.11/uploadfile.css" rel="stylesheet"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.11/jquery.uploadfile.min.js"></script>
+    <meta charset="utf-8"/>
+<title>Welcome to CodeIgniter</title>
+</head>
+<body>
+	<div id="img">
+    </div>
+</body>
+</html>
+<script>
+            window.onbeforeunload = function (e) {
+                var message = "Chay ngay di trước khi ?";
+                var firefox = /Firefox[\/\s](\d+)/.test(navigator.userAgent);
+                if (firefox) {
+                    //Add custom dialog
+                    //Firefox does not accept window.showModalDialog(), window.alert(), window.confirm(), and window.prompt() furthermore
+                    var dialog = document.createElement("div");
+                    document.body.appendChild(dialog);
+                    dialog.id = "dialog";
+                    dialog.style.visibility = "hidden";
+                    dialog.innerHTML = message;
+                    var left = document.body.clientWidth / 2 - dialog.clientWidth / 2;
+                    dialog.style.left = left + "px";
+                    dialog.style.visibility = "visible";
+                    var shadow = document.createElement("div");
+                    document.body.appendChild(shadow);
+                    shadow.id = "shadow";
+                    //tip with setTimeout
+                    setTimeout(function () {
+                        document.body.removeChild(document.getElementById("dialog"));
+                        document.body.removeChild(document.getElementById("shadow"));
+                    }, 0);
+                }
+                return message;
+            };
+        </script>
+</apex:page>

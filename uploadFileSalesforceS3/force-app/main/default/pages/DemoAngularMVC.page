@@ -1,0 +1,42 @@
+<apex:page showHeader="false" applyHtmlTag="false" docType="html-5.0" controller="STM_StadiumCC">
+ 
+ <!-- 
+        /**
+         * Webkul Software.
+         *
+         * @category  Webkul
+         * @author    Webkul
+         * @copyright Copyright (c) 2010-2016 Webkul Software Private Limited (https://webkul.com)
+         * @license   https://store.webkul.com/license.html
+         */
+         -->
+ 
+<head>
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ 
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+   <script>
+      
+     var App = angular.module('myApp', []);
+  
+     App.controller('myctrl', function ($scope) {   
+     
+         $scope.stadiums = {!stadiums}
+     });
+   </script>
+</head>
+<body ng-app="myApp" class="container" ng-controller="myctrl">
+   <table class="table table-bordered">
+     <tr>
+       <th>Name</th>
+       <th>Id</th>
+     </tr>
+     <tr ng-repeat="stadium in stadiums | filter:query">          
+       <td>{{stadium.Name}}</td>
+       <td>{{stadium.Id}}</td>
+     </tr>
+   </table>
+</body>
+</apex:page>

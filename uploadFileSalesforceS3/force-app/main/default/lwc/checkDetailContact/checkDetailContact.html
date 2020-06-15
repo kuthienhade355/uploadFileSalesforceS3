@@ -1,0 +1,21 @@
+<template>
+    <lightning-card icon-name="custom:custom19" title='Demo Account Detail'>
+        <div style="margin-left: 3%">
+            <lightning-datatable columns={columns} 
+            data={data} 
+            key-field="id"
+            onrowselection={getSelectedName}>
+            </lightning-datatable>
+        </div>
+        <div if:true={dataDetail}>
+            <lightning-record-form
+                record-id={dataDetail}
+                object-api-name="Account"
+                layout-type="Compact"
+                columns="1"
+                mode="readonly">
+            </lightning-record-form>
+        </div>
+        <c-account-detail item={dataDetail}></c-account-detail>
+    </lightning-card>
+</template>

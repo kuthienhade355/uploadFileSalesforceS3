@@ -1,0 +1,107 @@
+<apex:page showHeader="false" sidebar="true" docType="html-5.0" controller="LoginCC">
+	<!-- <html ng-app="myApp" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en"> -->
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+	<head>		
+		<title>Login</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+		<script>
+			// var app = angular.module('myApp',[]);
+			// app.controller('body',function($scope){
+			// 	$scope.username = '';
+			//     $scope.password = '';
+			//      $scope.formSubmit = function(){
+			//      	Visualforce.remoting.Manager.invokeAction(
+			// 	        '{!$RemoteAction.LoginCC.getLogin}', 
+			// 	        $scope.username,$scope.password,
+			// 	        function(result, event){
+			// 	        	if(result !== null){
+			// 				    document.cookie = "apex__urlId =" +result + "; path=/";
+			// 				    var tr = "https://login241018-developer-edition.ap4.force.com/Experience";
+			// 				    window.location.href = tr;
+			// 	        	}else{
+			// 	        		alert('username or password is wrong please try it again!');
+			// 	        	}
+			// 	        }, 
+			// 	        {escape: true}
+			// 	    );
+			// 	}
+			// })
+		</script>
+		<apex:slds />
+	</head>
+
+	<div class="slds-grid slds-grid_align-center">
+		<apex:panelGrid bgcolor="white" columns="1">
+	        <apex:panelGrid width="758" cellpadding="0" cellspacing="0" bgcolor="white" columns="1" styleClass="topPanelContainer">
+		    	<apex:pageMessages />
+		    	<apex:image url="{!URLFOR($Resource.SiteSamples, 'img/clock.png')}"/>
+			</apex:panelGrid>
+		</apex:panelGrid>
+	</div>
+	<div class="slds-grid slds-grid_align-center">
+	    <apex:form >
+	        			<!-- outputPanel -->		
+	        				<apex:panelGroup >
+	        				<div class="slds-form-element" >
+		        				<apex:outputPanel rendered="{!getInput}">
+				                <label class="slds-form-element__label " for="Username">Username</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputText value="{!username}" />
+				            	</div>
+				                <label class="slds-form-element__label " for="Password">Password</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputSecret value="{!password}" />  
+				                </div>         
+				                <apex:commandButton action="{!getLoginAccount}"
+				                    value="{!$Label.site.login_button}" />
+				            	</apex:outputPanel>
+				            	<br />
+						        <apex:outputPanel rendered="{!!getInput}">
+				               	<label class="slds-form-element__label " for="Username">Username</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputText value="{!username}" />
+				            	</div>
+				                <label class="slds-form-element__label " for="Password">Password</label>
+				                <div class="slds-form-element__control">
+				                <apex:inputSecret value="{!password}" />  
+				                </div>         
+				                <apex:commandButton action="{!getLoginAccount}"
+				                    value="{!$Label.site.login_button}" />
+						        </apex:outputPanel>
+						   	</div>
+			            	</apex:panelGroup>
+		        		<!-- End outputPanel -->
+	    </apex:form>
+	</div>
+
+		 
+
+		<!-- <body ng-controller='body'>
+		<div class="slds-grid slds-grid_align-center">
+			<div class="slds-form-element" > 
+			  <label class="slds-form-element__label " for="Username">Username</label>
+			  <div class="slds-form-element__control">
+			    <input id="Username" class="slds-input" type="text" placeholder="Username" ng-model="username"/>
+			  </div>
+			  <label class="slds-form-element__label " for="Password">Password</label>
+			  <div class="slds-form-element__control ">
+			    <input id="Password" class="slds-input" type="password" placeholder="Password" ng-model="password" />
+			  </div>
+			  <br/>
+			   <a class="slds-button slds-button_brand" type="submit"  ng-click="formSubmit()">Login</a>
+			</div>
+		</div>
+	</body> -->
+	</html>
+    <script>
+            jQuery(document).ready(function($)
+{
+if (window.history && window.history.pushState)
+{
+$(window).on('popstate', function() {//when back is clicked popstate event executes
+alert("tran minh quan")
+});
+}
+});
+        </script>
+</apex:page>

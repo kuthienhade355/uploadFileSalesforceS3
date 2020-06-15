@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title="HelloWorld" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <p>Hello, {greeting}!</p>
+            <p> {lastName} </p>
+            <lightning-input label="Name" value={greeting}></lightning-input>
+            <lightning-input label="lastName" value={lastName} onchange={changeHandler1}></lightning-input>
+            {propertyName}
+
+            {uppercasedFullName}
+            
+        </div>
+        <ul>
+            <template for:each={contacts} for:item="contact" for:index="countItems">  
+              <li key={contact.Id}>
+                {countItems}, {contact.Name}, {contact.Title} , {countItems}
+              </li>
+            </template>
+            <template if:true={isTrueTemplate}>
+                This is the true template. (Hài Vl)
+              </template>
+              <template if:false={isTrueTemplate}>
+                This is the false template. (Không có hài)
+              </template>
+          </ul>
+
+           
+          
+          <div>
+            <button onclick={handlePlay}>Play</button>
+            <button onclick={handlePause}>Pause</button>
+        </div>
+    </lightning-card>
+    
+</template>

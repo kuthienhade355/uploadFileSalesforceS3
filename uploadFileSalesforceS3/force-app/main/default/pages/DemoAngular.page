@@ -1,0 +1,403 @@
+<apex:page showHeader="false" applyHtmlTag="true" docType="html-5.0" controller="BlogOneController">
+    <html  ng-app="accounts" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+
+    	<head>
+  			<apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"/>
+       		<apex:slds />
+    	</head>
+    	 <style type="text/css">
+            .sortorder:after {
+            content: '\25b2';  
+            }
+            .sortorder.reverse:after{
+            content: '\25bc'; 
+            } 
+            .slds-button:hover {
+                background-color: rgba(21,137,238,.1);
+            }
+            .active{
+                background: #7e8be4;
+                color: red;
+            }
+    	</style>
+    	<script type="text/javascript">
+    		var app = angular.module('accounts',[]);
+    		var ctr = app.controller('ctr',function($scope,$filter){
+    			$scope.items = {!Accounts};
+    			$scope.columnName ="name1";
+    			$scope.columnDescription = 'description1';
+    			$scope.columnPhone ="Phone1";
+    			$scope.columnType = "Type1";
+    			$scope.columnWebsite = "Website1";
+    			$scope.newItems = [];
+    			$scope.reverse = false;
+    			$scope.sorting = " ";
+    			$scope.sizePage = 10;
+    			$scope.currentPage = 0;
+    			$scope.section = 'close';
+
+    			$scope.pagination = function(){
+    				for(var i = 0 ; i < $scope.items.length ; i++ ){
+    					if (i% $scope.sizePage === 0){
+    						$scope.newItems[Math.floor(i/$scope.sizePage)] = [$scope.items[i]];
+    					}else{
+    						$scope.newItems[Math.floor(i/$scope.sizePage)].push($scope.items[i]);
+    					}
+    				}
+    				
+    			}
+
+    			$scope.changeSizePage = function(){
+    				singleSelect: null
+    			}
+
+    			$scope.changeNumber = function(number){
+    				if($scope.sizePage != number){
+    					$scope.sizePage = number;
+    					$scope.pagination();
+    				}
+    			}
+
+    			$scope.range = function(start,end){	
+    				var rse = [],i;
+    				if(end){
+    					end = start;
+    					start = 0
+    				}
+    				if(!end){
+    					end = start;
+    					start = 0
+    				}
+    				for(i = start ; i<end;i++){
+    					rse.push(i);
+    				}
+    				var paging = rse;
+    				if(rse.length >6){
+    					var currentPage = $scope.currentPage;
+    					paging = rse.slice(0,1);
+    					if(currentPage === 0){
+    						// show 123 ...567
+    						paging = paging.concat(rse.slice(1,3));
+    						paging.push(-1);
+    						paging = paging.concat(rse.slice(rse.length-3,rse.length));
+    					}
+    					else if(currentPage < 3){
+    						//  show 1234 ...7
+    						paging = paging.concat(rse.slice(1,4));
+    						paging.push(-1);
+    						paging = paging.concat(rse.slice(rse.length-1,rse.length));
+    					}
+    					else if(currentPage > rse.length-4){
+    						// show 1...4567
+    						paging.push(-1);
+    						paging = paging.concat(rse.slice(rse.length-4,rse.length));
+    					}else{
+    						//1...234...7
+    						paging.push(-1);
+    						paging = paging.concat(rse.slice(currentPage - 1 ,currentPage+2));
+    						paging.push(-2);
+    						paging = paging.concat(rse.slice(rse.length-1,rse.length));
+    					}
+    				}
+    				return paging;
+    			}
+
+    			$scope.prevPage = function(){
+    				if($scope.currentPage>0){
+    					$scope.currentPage--;
+    				}
+    			}
+
+    			$scope.changeSection =function(name){
+    				if($scope.section === name){
+    				   $scope.section = 'close';
+    				}else{
+    					$scope.section ='open';
+    				}
+    			}
+
+    			$scope.changeName = function(name){
+    				if($scope.columnName === name){
+    					$scope.columnName = "name1";
+    				}else{
+    					$scope.columnName = "name";
+    				}
+    			}
+
+    			$scope.changeDescription = function(changeDescription){
+    				if($scope.columnDescription === changeDescription){
+    					$scope.columnDescription = "description1";
+    				}else{
+    					$scope.columnDescription = "description";
+    				}
+    			}	
+
+    			$scope.changePhone = function(changePhone){
+    				if($scope.columnPhone === changePhone){
+    					$scope.columnPhone = "Phone1";
+    				}else{
+    					$scope.columnPhone = "Phone";
+    				}
+    			}
+
+    			$scope.changeType = function(changeType){
+    				if($scope.columnType === changeType){
+    					$scope.columnType = "Type1";
+    				}else{
+    					$scope.columnType = "Type";
+    				}
+    			}
+
+    			$scope.changeWebsite = function(Website){
+    				if($scope.columnWebsite === Website){
+    					$scope.columnWebsite = "Website1";
+    				}else{
+    					$scope.columnWebsite = "Website";
+    				}
+    			}
+
+    			$scope.nextPage = function(){
+    				if($scope.currentPage<$scope.newItems.length-1){
+    					$scope.currentPage ++;
+    				}
+    			}
+
+    			$scope.setPage = function(){
+    				$scope.currentPage = this.n;
+    			}
+
+    			$scope.sort = function(newSortPage){
+    				if($scope.sorting == newSortPage)
+    					$scope.reverse = !$scope.reverse;
+    					$scope.sorting = newSortPage;
+    					$scope.items = $filter('orderBy')($scope.items,$scope.sorting,$scope.reverse);
+						$scope.pagination();  
+    				if(!newSortPage){
+    					$scope.reverse !=$scope.reverse;
+    					$scope.sorting = 'name';
+    					$scope.items = $filter('orderBy')($scope.items,$scope.sorting,$scope.reverse);
+						$scope.pagination();  
+    				}			
+    			}
+    			$scope.sort();
+    		});
+    		ctr.$inject = ['$scope', '$filter'];
+    	</script>
+        <body ng-controller = "ctr">
+
+        	<table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+
+  <thead>
+    <tr class="slds-line-height_reset">
+        	<!-- select -->
+
+    	<div class="slds-form-element">
+		  <label class="slds-form-element__label" for="select-01">Select Column</label>
+		  <div class="slds-form-element__control slds-size_1-of-6">
+		    <div class="slds-select_container">
+		      <select class="slds-select" id="select-01" ng-model="changeSizePage.singleSelect" ng-change="changeNumber(changeSizePage.singleSelect)">
+		        <option>2</option>
+		        <option>5</option>
+		        <option>10</option>
+		        <option>20</option>
+		      </select>
+		    </div>
+		  </div>
+		</div>
+
+
+
+    	<th>
+    		<div class="demo-only">
+  <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Show Favorites" ng-click="changeSection('open')">	
+    Click
+  </button>
+  <section class="slds-popover slds-nubbin_top-left slds-dynamic-menu slds-size_6-of-6" role="dialog" aria-label="My Favourites" aria-describedby="dialog-body-id-2" style="position: absolute; left: 0px; top: 55px;" ng-show="section === 'open'">
+    <div class="slds-popover__body slds-p-horizontal_none" id="dialog-body-id-2">
+      <div class="slds-p-vertical_x-small slds-p-horizontal_small">
+        <h3 class="slds-text-title_caps slds-m-bottom_x-small" role="presentation">Columns</h3>
+        <p>Show Column</p>
+      </div>
+    </div>
+    <!-- <footer class="slds-popover__footer"> -->
+      
+      <!-- Selection -->
+		<div class="slds-form-element">
+			  <div class="slds-form-element__control">
+			    <div class="slds-checkbox">
+			      <input type="checkbox" name="options" id="checkbox-22" value="checkbox-22" />
+			      <label class="slds-checkbox__label" for="checkbox-22" ng-click ="changeName('name')">
+			        <span class="slds-checkbox_faux" for="checkbox-22" ></span>
+			        <span class="slds-form-element__label" for="checkbox-2">Name</span>
+			      </label>
+			    </div>
+			  </div>
+			</div>
+			<div class="slds-form-element">
+			  <div class="slds-form-element__control">
+			    <div class="slds-checkbox">
+			      <input type="checkbox" name="options" id="checkbox-23" value="checkbox-23" />
+			      <label class="slds-checkbox__label" for="checkbox-23" ng-click ="changeDescription('description')" >
+			        <span class="slds-checkbox_faux" ></span>
+			        <span class="slds-form-element__label">Description</span>
+			      </label>
+			    </div>
+			  </div>
+			</div>
+			<div class="slds-form-element">
+			  <div class="slds-form-element__control">
+			    <div class="slds-checkbox">
+			      <input type="checkbox" name="options" id="checkbox-24" value="checkbox-24" />
+			      <label class="slds-checkbox__label" for="checkbox-24" ng-click ="changePhone('Phone')">
+			        <span class="slds-checkbox_faux"></span>
+			        <span class="slds-form-element__label">Phone</span>
+			      </label>
+			    </div>
+			  </div>
+			</div>
+			<div class="slds-form-element">
+			  <div class="slds-form-element__control">
+			    <div class="slds-checkbox">
+			      <input type="checkbox" name="options" id="checkbox-25" value="checkbox-25" />
+			      <label class="slds-checkbox__label" for="checkbox-25" ng-click ="changeType('Type')">
+			        <span class="slds-checkbox_faux" ></span>
+			        <span class="slds-form-element__label" >Type</span>
+			      </label>
+			    </div>
+			  </div>
+			</div>
+			<div class="slds-form-element">
+			  <div class="slds-form-element__control">
+			    <div class="slds-checkbox">
+			      <input type="checkbox" name="options" id="checkbox-26" value="checkbox-26" />
+			      <label class="slds-checkbox__label" for="checkbox-26" ng-click ="changeWebsite('Website')">
+			        <span class="slds-checkbox_faux" ></span>
+			        <span class="slds-form-element__label">Website</span>
+			      </label>
+			    </div>
+			  </div>
+			</div>
+    <!-- </footer> -->
+  </section>
+</div>
+    	</th>
+      <th aria-label="Name" aria-sort="none" class="slds-text-title_caps slds-is-resizable slds-is-sortable" scope="col" ng-show="columnName === 'name1'">
+        <a class="slds-th__action slds-text-link_reset" ng-click="sort('name')" role="button" tabindex="-1" aria-hidden="true">
+          <span  class="slds-assistive-text">Sort by: </span>
+          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" title="Name">Name</span>
+            <span class="sortorder" ng-show="sorting === 'name'" ng-class="{reverse: reverse}"></span>
+          </div>
+       </a>
+        <div class="slds-resizable">
+          <input aria-label="Name column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-8" max="1000" min="20" tabindex="-1" type="range" />
+        </div>
+      </th>
+      <th aria-label="Description" aria-sort="none" class="slds-text-title_caps slds-is-resizable slds-is-sortable" scope="col" ng-show="columnDescription === 'description1'">
+        <a class="slds-th__action slds-text-link_reset" ng-click="sort('Description')" role="button" tabindex="-1">
+          <span ng-show="sorting === 'Description'"  class="slds-assistive-text">Sort by: </span>
+          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" title="Description">Description</span>
+            <span class="sortorder" ng-show="sorting === 'Description'" ng-class="{reverse: reverse}"></span>
+          </div>
+        </a>
+        <div class="slds-resizable">
+          <input aria-label="Description column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-10" max="1000" min="20" tabindex="-1" type="range" />
+        
+        </div>
+      </th>
+      <th aria-label="Phone" aria-sort="none" class="slds-text-title_caps slds-is-resizable slds-is-sortable" scope="col" ng-show="columnPhone === 'Phone1'">
+        <a class="slds-th__action slds-text-link_reset" ng-click="sort('Phone')" role="button" tabindex="-1">
+          <span ng-show="sorting === 'Phone'"  class="slds-assistive-text">Sort by: </span>
+          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" title="Phone">Phone</span>
+            <span class="sortorder" ng-show="sorting === 'Phone'" ng-class="{reverse: reverse}"></span>
+          </div>
+        </a>
+        <div class="slds-resizable">
+          <input aria-label="Phone column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-11" max="1000" min="20" tabindex="-1" type="range" />
+        </div>
+      </th>
+      <th aria-label="Type" aria-sort="none" class="slds-text-title_caps slds-is-resizable slds-is-sortable" scope="col" ng-show="columnType === 'Type1'">
+        <a class="slds-th__action slds-text-link_reset" ng-click="sort('Type')" role="button" tabindex="-1">
+          <span ng-show="sorting === 'Type'"  class="slds-assistive-text">Sort by: </span>
+          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" title="Type">Type</span>
+            <span class="sortorder" ng-show="sorting === 'Type'" ng-class="{reverse: reverse}"></span>
+          </div>
+        </a>
+        <div class="slds-resizable">
+          <input aria-label="Type column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-12" max="1000" min="20" tabindex="-1" type="range" />
+        
+        </div>
+      </th>
+      <th aria-label="Website" aria-sort="none" class="slds-text-title_caps slds-is-resizable slds-is-sortable" scope="col" ng-show="columnWebsite === 'Website1'">
+        <a class="slds-th__action slds-text-link_reset"  ng-click="sort('Website')" role="button" tabindex="-1">
+          <span ng-show="sorting === 'Website'"  class="slds-assistive-text">Sort by: </span>
+          <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+            <span class="slds-truncate" title="Website">Website</span>
+            <span class="sortorder" ng-show="sorting === 'Website'" ng-class="{reverse: reverse}"></span>
+          </div>
+        </a>
+        <div class="slds-resizable">
+          <input aria-label="Website column width" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-14" max="1000" min="20" tabindex="-1" type="range" />
+        
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in newItems[currentPage] " aria-selected="false" class="slds-hint-parent">
+    	<th>
+    		
+    	</th>
+      <th scope="row" tabindex="0" ng-show="columnName === 'name1'">
+        <div class="slds-truncate" title="Name"><a tabindex="-1">{{item.name}}</a></div>
+      </th>
+      <td role="gridcell" ng-show="columnDescription === 'description1'">
+        <div class="slds-truncate" title="Description">{{item.Description}}</div>
+      </td>
+      <td role="gridcell" ng-show="columnPhone === 'Phone1'">
+        <div class="slds-truncate" title="Phone">{{item.Phone}}</div>
+      </td>
+      <td role="gridcell" ng-show="columnType === 'Type1'">
+        <div class="slds-truncate" title="Type">{{item.Type}}</div>
+      </td>
+      <td role="gridcell" ng-show="columnWebsite === 'Website1'">
+        <div class="slds-truncate" title="Website"><a tabindex="-1">{{item.Website}}</a></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+	<div class="slds-grid slds-m-top_small slds-m-bottom_small">
+                        <div class="slds-col slds-align_absolute-center">
+		<div ng-class="{'slds-hide': currentPage === 0}">
+			<button ng-click="prevPage()">prev</button>	
+		</div>
+		<div ng-repeat = " n in range(newItems.length)">
+			 &nbsp;&nbsp;
+			<button ng-class="{active: n == currentPage}" ng-bind="n+1" ng-show="(n>=0)" ng-click="setPage(n)">1</button>
+			<span ng-show="n<0">...</span>
+		</div>
+		 &nbsp;&nbsp;
+		<div ng-class="{'slds-hide': currentPage === newItems.length -1}">
+			<button ng-click="nextPage()">next</button>
+		</div>
+	</div>
+</div>
+        </body>
+        <script type="text/javascript">
+        	var checkbox = document.getElementById('checkbox-23');
+			checkbox.checked = true;
+			var checkbox1 = document.getElementById('checkbox-24');
+			checkbox1.checked = true;
+			var checkbox2 = document.getElementById('checkbox-25');
+			checkbox2.checked = true;
+			var checkbox3 = document.getElementById('checkbox-26');
+			checkbox3.checked = true;
+			var checkbox4 = document.getElementById('checkbox-22');
+			checkbox4.checked = true;
+        </script>
+    </html>
+    
+</apex:page>
